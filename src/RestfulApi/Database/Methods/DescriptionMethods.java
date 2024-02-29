@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import RestfulApi.Database.Response.Response;
+import RestfulApi.Database.Response.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,69 +21,57 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
-    public String GET(Connection con, String params) throws SQLException {
-        StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE ");
-        String test = "";
-        boolean flag = false;
+    public String GET(Connection con, Map<String, String> queryParams) throws SQLException {
+        StringBuilder sql = getSql(queryParams);
 
-        Map<String, String> queryParams = new HashMap<>();
-
-        String queryStr = params;
-
-        if (queryStr != null && !queryStr.isEmpty()) {
-            String[] paramsr = queryStr.split("&");
-
-            for (String param : paramsr) {
-                String[] keyValue = param.split("=");
-
-                if (keyValue.length == 2) {
-                    queryParams.put(keyValue[0], keyValue[1]);
-                } else {
-                    queryParams.put(keyValue[0], "");
-                }
-            }
-        }
-
-        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-            if (flag){
-                if (!entry.getKey().equals("id")){
-                    sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
-                }
-                else{
-                    sql.append(String.format(" AND %s = %s", entry.getKey(), entry.getValue()));
-                }
-            }else if (!entry.getKey().equals("id")){
-                sql.append(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
-            }
-            else {
-                sql.append(String.format("%s = %s", entry.getKey(), entry.getValue()));
-            }
-            flag = true;
-        }
-
-        System.out.println(sql);
         PreparedStatement ps = con.prepareStatement(sql.toString());
         ResultSet resultSet = ps.executeQuery();
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
 
-        Map<String, Object> jsonObj = null;
-        String s = null;
-        while (resultSet.next()) {
-            jsonObj = new LinkedHashMap<>();
+        List<User> users = new ArrayList<>();
+        Response response;
 
-            jsonObj.put("id", resultSet.getString("id"));
-            jsonObj.put("login", resultSet.getString("login"));
-            jsonObj.put("email", resultSet.getString("email"));
-            jsonObj.put("password", resultSet.getString("password"));
-            jsonObj.put("firstName", resultSet.getString("firstName"));
-            jsonObj.put("secondName", resultSet.getString("secondName"));
+        if (resultSet.isClosed()) {
+            return "BR";
+        } else {
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String login = resultSet.getString("login");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String firstName = resultSet.getString("firstName");
+                String secondName = resultSet.getString("secondName");
+                User user = new User(id, login, email, password, firstName, secondName);
 
-            s = gson.toJson(jsonObj);
-
+                users.add(user);
+            }
+            response = new Response(users, "ok", "success");
         }
-        return s;
+        return gson.toJson(response);
+    }
+
+    private StringBuilder getSql(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE ");
+        boolean flag = false;
+
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                if (!entry.getKey().equals("id")) {
+                    sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
+                } else {
+                    sql.append(String.format(" AND %s = %s", entry.getKey(), entry.getValue()));
+                }
+            } else if (!entry.getKey().equals("id")) {
+                sql.append(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
+            } else {
+                sql.append(String.format("%s = %s", entry.getKey(), entry.getValue()));
+            }
+            flag = true;
+        }
+        return sql;
     }
 
 }

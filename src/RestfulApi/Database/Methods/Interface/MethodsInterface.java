@@ -7,5 +7,5 @@ import java.util.Map;
 public interface MethodsInterface {
     void execute (Connection con, String sql) throws SQLException;
 
-    String GET (Connection con, String params) throws SQLException;
+    String GET (Connection con, Map<String, String> queryParams) throws SQLException;
 }
