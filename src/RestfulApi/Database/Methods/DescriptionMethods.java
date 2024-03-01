@@ -22,7 +22,7 @@ public class DescriptionMethods implements MethodsInterface {
 
     @Override
     public String GET(Connection con, Map<String, String> queryParams) throws SQLException {
-        StringBuilder sql = getSql(queryParams);
+        StringBuilder sql = GetRequest(queryParams);
 
         PreparedStatement ps = con.prepareStatement(sql.toString());
         ResultSet resultSet = ps.executeQuery();
@@ -52,7 +52,7 @@ public class DescriptionMethods implements MethodsInterface {
         return gson.toJson(response);
     }
 
-    private StringBuilder getSql(Map<String, String> queryParams) {
+    private StringBuilder GetRequest(Map<String, String> queryParams) {
         StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE ");
         boolean flag = false;
 
