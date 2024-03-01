@@ -1,9 +1,7 @@
 package RestfulApi.Server;
 
-import RestfulApi.Controlers.GETController;
-import RestfulApi.Database.Database;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpServer;
+import RestfulApi.Controlers.ControllerRequests;
+import com.sun.net.httpserver.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,14 +22,13 @@ public class RestHttpServer {
     }
 
     public static void main(String[] args) throws Exception{
-        Database database = new Database();
-
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        System.out.println("Server started on port " + port);
 
-        server.createContext("/", new GETController());
+        server.createContext("/api", new ControllerRequests());
 
         server.setExecutor(null);
         server.start();
+
+        System.out.println("Server started on port " + port);
     }
 }

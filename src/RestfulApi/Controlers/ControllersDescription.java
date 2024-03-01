@@ -1,32 +1,38 @@
 package RestfulApi.Controlers;
 
+import RestfulApi.Controlers.Interface.ControllersInterface;
 import RestfulApi.Database.Database;
 import RestfulApi.Database.Response.Response;
 import RestfulApi.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GETController implements HttpHandler {
+public class ControllersDescription implements ControllersInterface {
 
+    public static class User {
+        String login;
+        String email;
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException, NumberFormatException {
-        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
-            String response = "Invalid request method. This endpoint supports only GET requests.";
-            RestHttpServer.sendResponse(exchange, 405, response);
-            return;
+        @Override
+        public String toString() {
+            return  "login=" + login + "&" + "email=" + email;
         }
+    }
+    @Override
+    public void GETController(HttpExchange exchange) throws IOException, NumberFormatException {
 
 
         String query = exchange.getRequestURI().getRawQuery();
-
 
         if (query == null || query.isEmpty()) {
             String response = "No query parameters provided.";
@@ -52,8 +58,16 @@ public class GETController implements HttpHandler {
             }
         }
     }
+    @Override
+    public void POSTController(HttpExchange exchange) throws IOException, NumberFormatException {
+        String body = readRequestBody(exchange);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        String param = gson.fromJson(body, User.class).toString();
+        RestHttpServer.sendResponse(exchange, 200, param);
+    }
 
-    public Map<String, String> queryToMap(String query) {
+    public static Map<String, String> queryToMap(String query) {
         if(query == null) {
             return null;
         }
@@ -67,5 +81,18 @@ public class GETController implements HttpHandler {
             }
         }
         return result;
+    }
+
+
+    static String readRequestBody(HttpExchange httpExchange) throws IOException {
+        InputStream inputStream = httpExchange.getRequestBody();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        StringBuilder requestBody = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestBody.append(line);
+        }
+        reader.close();
+        return requestBody.toString();
     }
 }
