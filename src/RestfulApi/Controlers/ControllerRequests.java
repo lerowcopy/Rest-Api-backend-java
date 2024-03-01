@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ControllerRequests extends ControllersDescription implements HttpHandler {
 
@@ -12,10 +13,18 @@ public class ControllerRequests extends ControllersDescription implements HttpHa
     public void handle(HttpExchange exchange) throws IOException, NumberFormatException {
         switch (exchange.getRequestMethod()){
             case "GET" -> {
-                GETController(exchange);
+                try {
+                    GETController(exchange);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
             case "POST" -> {
-                POSTController(exchange);
+                try {
+                    POSTController(exchange);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
