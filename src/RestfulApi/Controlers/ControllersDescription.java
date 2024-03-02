@@ -30,7 +30,9 @@ public class ControllersDescription implements ControllersInterface {
 
         String query = exchange.getRequestURI().getRawQuery();
 
-        if (query == null || query.isEmpty()) {
+        System.out.println(exchange.getRequestURI().getPath().substring("/".length()));
+
+        /*if (query == null || query.isEmpty()) {
             String response = "No query parameters provided.";
             RestHttpServer.sendResponse(exchange, 400, response);
         } else {
@@ -44,7 +46,7 @@ public class ControllersDescription implements ControllersInterface {
                 RestHttpServer.sendResponse(exchange, 200, response);
             }
 
-        }
+        }*/
     }
 
     @Override
@@ -54,12 +56,17 @@ public class ControllersDescription implements ControllersInterface {
         Gson gson = gsonBuilder.create();
 
         String body = readRequestBody(exchange);
-        String query = gson.fromJson(body, User.class).toString();
 
-        Map<String, String> param = queryToMap(query);
+        if (body.equals("BR")){
+            RestHttpServer.sendResponse(exchange, 400, gson.toJson(new Response()));
+        }else{
+            String query = gson.fromJson(body, User.class).toString();
 
-        String response = database.POST(Database.con, param);
-        RestHttpServer.sendResponse(exchange, 201, response);
+            Map<String, String> param = queryToMap(query);
+
+            String response = database.POST(Database.con, param);
+            RestHttpServer.sendResponse(exchange, 201, response);
+        }
     }
 
     public static Map<String, String> queryToMap(String query) {
@@ -84,6 +91,9 @@ public class ControllersDescription implements ControllersInterface {
         StringBuilder requestBody = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
+            if (!line.contains("login:") && !line.contains("email:") && !line.contains("password:") && !line.contains("firstName:") && !line.contains("secondName:") && !line.contains("{") && !line.contains("}")){
+                return "BR";
+            }
             requestBody.append(line);
         }
         reader.close();

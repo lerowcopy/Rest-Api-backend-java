@@ -3,7 +3,6 @@ package RestfulApi.Database.Methods;
 import RestfulApi.Database.Methods.Interface.MethodsInterface;
 
 import java.math.BigInteger;
-import java.rmi.MarshalException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -69,7 +68,9 @@ public class DescriptionMethods implements MethodsInterface {
         PreparedStatement ps = con.prepareStatement(sql.toString());
         ps.execute();
 
-        sql = GetRequest(queryParams);
+        String emailUser = GetUserId(queryParams);
+
+        sql = new StringBuilder(String.format("SELECT * FROM User WHERE email = '%s'", emailUser));
 
         ps = con.prepareStatement(sql.toString());
         ResultSet resultSet = ps.executeQuery();
@@ -93,17 +94,22 @@ public class DescriptionMethods implements MethodsInterface {
         return gson.toJson(response);
     }
 
+    private String GetUserId(Map<String, String> queryParams) {
+        String emailUser = "";
+        for (Map.Entry<String, String> entry : queryParams.entrySet()){
+            if (entry.getKey().equals("email")){
+                emailUser = (entry.getValue());
+            }
+        }
+        return emailUser;
+    }
+
     private StringBuilder GetRequest(Map<String, String> queryParams) {
         StringBuilder sql = new StringBuilder("SELECT * FROM user WHERE ");
         boolean flag = false;
 
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
             if (flag) {
-                if (entry.getKey().equals("password")){
-                    sql.append(String.format(" AND '%s'", hex(entry.getValue(), 10)));
-                }else {
-                    sql.append(String.format(" AND '%s'", entry.getValue()));
-                }
                 if (!entry.getKey().equals("id")) {
                     sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
                 } else {
@@ -115,16 +121,10 @@ public class DescriptionMethods implements MethodsInterface {
                 } else {
                     sql.append(String.format("%s = %s", entry.getKey(), entry.getValue()));
                 }
-                if (entry.getKey().equals("password")){
-                    sql.append(String.format("'%s'", hex(entry.getValue(), 10)));
-                }else {
-                    sql.append(String.format("'%s'", entry.getValue()));
-                }
             }
 
             flag = true;
         }
-        System.out.println(sql.toString());
         return sql;
     }
 
@@ -133,6 +133,9 @@ public class DescriptionMethods implements MethodsInterface {
         boolean flag = true;
 
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (entry.getKey().equals("id")){
+
+            }
             if (flag) {
                 sql.append(String.format("%s", entry.getKey()));
             } else {
