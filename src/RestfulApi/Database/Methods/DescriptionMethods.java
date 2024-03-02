@@ -133,9 +133,6 @@ public class DescriptionMethods implements MethodsInterface {
         boolean flag = true;
 
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-            if (entry.getKey().equals("id")){
-
-            }
             if (flag) {
                 sql.append(String.format("%s", entry.getKey()));
             } else {

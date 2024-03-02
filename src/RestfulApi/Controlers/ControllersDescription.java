@@ -30,9 +30,7 @@ public class ControllersDescription implements ControllersInterface {
 
         String query = exchange.getRequestURI().getRawQuery();
 
-        System.out.println(exchange.getRequestURI().getPath().substring("/".length()));
-
-        /*if (query == null || query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             String response = "No query parameters provided.";
             RestHttpServer.sendResponse(exchange, 400, response);
         } else {
@@ -46,7 +44,7 @@ public class ControllersDescription implements ControllersInterface {
                 RestHttpServer.sendResponse(exchange, 200, response);
             }
 
-        }*/
+        }
     }
 
     @Override
