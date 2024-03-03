@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,78 @@ public class ControllersDescription implements ControllersInterface {
             String response = database.POST(Database.con, param);
             RestHttpServer.sendResponse(exchange, 201, response);
         }
+    }
+
+    @Override
+    public void PUTController(HttpExchange Exchange) throws IOException, NumberFormatException, SQLException {
+        Database database = new Database();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        int id = Integer.parseInt(Exchange.getRequestURI().getPath().substring("/api/".length()));
+
+        String requestBody = readRequestBody(Exchange);
+
+        if (requestBody.equals("BR")){
+            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+        }else{
+            String query = gson.fromJson(requestBody, User.class).toString();
+
+            Map<String, String> param = queryToMap(query);
+
+            String response = database.PUT(Database.con, id, param);
+
+            if (response.equals("BR")){
+                RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+            }else{
+                RestHttpServer.sendResponse(Exchange, 204, response);
+            }
+        }
+    }
+
+    @Override
+    public void PATCHController(HttpExchange Exchange) throws IOException, NumberFormatException, SQLException {
+        Database database = new Database();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        int id = Integer.parseInt(Exchange.getRequestURI().getPath().substring("/api/".length()));
+
+        String requestBody = readRequestBody(Exchange);
+
+        if (requestBody.equals("BR")){
+            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+        }else{
+            String query = gson.fromJson(requestBody, User.class).toString();
+
+            Map<String, String> param = queryToMap(query);
+
+            String response = database.PATCH(Database.con, id, param);
+
+            if (response.equals("BR")){
+                RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+            }else{
+                RestHttpServer.sendResponse(Exchange, 200, response);
+            }
+        }
+    }
+
+    @Override
+    public void DELETEController(HttpExchange Exchange) throws IOException, NumberFormatException, SQLException {
+        Database database = new Database();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        int id = Integer.parseInt(Exchange.getRequestURI().getPath().substring("/api/".length()));
+
+        String response = database.DELETE(Database.con, id);
+
+        if (response.equals("BR")) {
+            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response(new ArrayList<>(), "incorrect id", "failed")));
+        }else{
+            RestHttpServer.sendResponse(Exchange, 200, response);
+        }
+
     }
 
     public static Map<String, String> queryToMap(String query) {

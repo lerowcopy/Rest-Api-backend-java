@@ -26,8 +26,29 @@ public class ControllerRequests extends ControllersDescription implements HttpHa
                     throw new RuntimeException(e);
                 }
             }
+            case "PUT" -> {
+                try {
+                    PUTController(exchange);
+                }catch (SQLException e){
+                    throw new RuntimeException(e);
+                }
+            }
+
+            case "PATCH" -> {
+                try {
+                    PATCHController(exchange);
+                }catch (SQLException e){
+                    throw new RuntimeException(e);
+                }
+            }
+
+            case "DELETE" -> {
+                try {
+                    DELETEController(exchange);
+                }catch (SQLException e){
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
-
-
 }
