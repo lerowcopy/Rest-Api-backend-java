@@ -1,0 +1,253 @@
+JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"background": new java.awt.Color( 51, 51, 51, 255 )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "LoginBtn"
+				"text": "Sign In"
+				"border": new javax.swing.border.MatteBorder( 0, 0, 3, 0, new java.awt.Color( 255, 255, 255, 255 ) )
+				"font": new java.awt.Font( "Manrope ExtraBold", 1, 17 )
+				"background": new java.awt.Color( 51, 51, 51, 255 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+				"focusPainted": false
+				"contentAreaFilled": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 80
+				"y": 65
+				"width": 88
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "signUpBtn"
+				"text": "Sign Up"
+				"border": new javax.swing.border.MatteBorder( 0, 0, 3, 0, sfield java.awt.Color white )
+				"font": new java.awt.Font( "Manrope ExtraBold", 1, 17 )
+				"background": new java.awt.Color( 51, 51, 51, 255 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+				"focusPainted": false
+				"contentAreaFilled": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 220
+				"y": 65
+				"width": 88
+				"height": 40
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "signUpPanel"
+				"background": new java.awt.Color( 51, 51, 51, 255 )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "loginField2"
+					"border": &MatteBorder0 new javax.swing.border.MatteBorder( 0, 0, 2, 0, sfield java.awt.Color white )
+					"font": &Font0 new java.awt.Font( "Manrope ExtraBold", 0, 20 )
+					"background": &Color0 new java.awt.Color( 51, 51, 51, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 230
+					"height": 34
+					"x": 80
+					"y": 215
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "loginL2"
+					"text": "login"
+					"font": &Font1 new java.awt.Font( "Fira Code", 0, 12 )
+					"foreground": &Color1 new java.awt.Color( 255, 255, 255, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 36
+					"height": 16
+					"x": 80
+					"y": 195
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "emailFIeld"
+					"border": #MatteBorder0
+					"font": #Font0
+					"background": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 230
+					"height": 34
+					"x": 80
+					"y": 280
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "emailL"
+					"text": "email"
+					"font": #Font1
+					"foreground": #Color1
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 36
+					"height": 16
+					"x": 80
+					"y": 260
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "firstNameField"
+					"border": #MatteBorder0
+					"font": #Font0
+					"background": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 230
+					"height": 34
+					"x": 80
+					"y": 415
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "firstNameL"
+					"text": "first name"
+					"font": #Font1
+					"foreground": #Color1
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 90
+					"height": 16
+					"x": 80
+					"y": 395
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "secondNameField"
+					"border": #MatteBorder0
+					"font": #Font0
+					"background": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 230
+					"height": 34
+					"x": 80
+					"y": 480
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "secondNameL"
+					"text": "second name"
+					"font": #Font1
+					"foreground": #Color1
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 85
+					"height": 16
+					"x": 80
+					"y": 460
+				} )
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField2"
+					"font": &Font2 new java.awt.Font( "Manrope ExtraBold", 0, 20 )
+					"border": &MatteBorder1 new javax.swing.border.MatteBorder( 0, 0, 2, 0, sfield java.awt.Color white )
+					"background": &Color2 new java.awt.Color( 51, 51, 51, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 230
+					"height": 34
+					"x": 80
+					"y": 345
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "passwordL2"
+					"text": "Password"
+					"font": &Font3 new java.awt.Font( "Fira Code", 0, 12 )
+					"foreground": &Color3 new java.awt.Color( 255, 255, 255, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 58
+					"height": 16
+					"x": 80
+					"y": 325
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "registerBtn"
+					"text": "Register"
+					"border": &LineBorder0 new javax.swing.border.LineBorder( sfield java.awt.Color darkGray, 1, true )
+					"foreground": &Color4 new java.awt.Color( 255, 255, 255, 255 )
+					"background": &Color5 new java.awt.Color( 51, 51, 51, 255 )
+					"contentAreaFilled": false
+					"focusPainted": false
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 100
+					"height": 35
+					"x": 220
+					"y": 540
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "cancelBtn"
+					"text": "Cancel"
+					"border": #LineBorder0
+					"foreground": #Color4
+					"background": #Color5
+					"contentAreaFilled": false
+					"focusPainted": false
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 100
+					"height": 35
+					"x": 85
+					"y": 540
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 405
+				"height": 610
+				"x": 0
+				"y": -40
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "loginPanel"
+				"background": new java.awt.Color( 51, 51, 51, 255 )
+				"visible": false
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "loginField"
+					"border": #MatteBorder0
+					"font": #Font0
+					"background": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 75
+					"y": 225
+					"width": 230
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "loginL"
+					"text": "login"
+					"font": #Font1
+					"foreground": #Color1
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 80
+					"y": 205
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "passwordL"
+					"text": "Password"
+					"font": #Font3
+					"foreground": #Color3
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 80
+					"y": 275
+				} )
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "passwordField1"
+					"font": #Font2
+					"border": #MatteBorder1
+					"background": #Color2
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 80
+					"y": 305
+					"width": 230
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "loginBtn"
+					"text": "Login"
+					"border": #LineBorder0
+					"foreground": #Color4
+					"background": #Color5
+					"contentAreaFilled": false
+					"focusPainted": false
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 145
+					"y": 375
+					"width": 100
+					"height": 35
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 405
+				"height": 610
+				"x": 0
+				"y": -40
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 27 )
+			"size": new java.awt.Dimension( 315, 483 )
+		} )
+	}
+}
