@@ -11,22 +11,18 @@ public class test {
     public static void main(String[] args) throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet("http://localhost:8000/api?login=rua");
-        CloseableHttpResponse response  = httpClient.execute(httpGet);
 
-        try {
+        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             HttpEntity entity = response.getEntity();
 
             if (entity != null) {
                 String entityS = EntityUtils.toString(entity);
-                if (entityS.contains("\"status\":\"success\"")){
+                if (entityS.contains("\"status\":\"success\"")) {
                     System.out.println(entityS);
-                }
-                else if (entityS.contains("failed")){
-                    System.out.println("failed");;
+                } else if (entityS.contains("failed")) {
+                    System.out.println("failed");
                 }
             }
-        } finally {
-            response.close();
         }
     }
 }
