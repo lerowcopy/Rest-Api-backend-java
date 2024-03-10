@@ -1,6 +1,8 @@
 package RestfulApi.Server;
 
+import RestfulApi.Controlers.AuthController.RegisterController;
 import RestfulApi.Controlers.ControllerRequests;
+import RestfulApi.Controlers.AuthController.LoginController;
 import com.sun.net.httpserver.*;
 
 import java.io.IOException;
@@ -14,6 +16,8 @@ public class RestHttpServer {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         server.createContext("/api", new ControllerRequests());
+        server.createContext("/auth/login", new LoginController());
+        server.createContext("/auth/register", new RegisterController());
 
         server.setExecutor(null);
         server.start();

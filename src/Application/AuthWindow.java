@@ -4,7 +4,16 @@
 
 package Application;
 
+import Application.Listeners.LoginAction;
+import Application.Listeners.SignUpAction;
+import Application.Listeners.userLoginAction;
+import Application.Listeners.userSignUpAction;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -12,10 +21,12 @@ import javax.swing.border.*;
  * @author 79531
  */
 public class AuthWindow extends JFrame {
+    public static AuthWindow instance;
     public AuthWindow() {
+        instance = this;
         initComponents();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(419, 607);
+        setSize(414, 607);
         loginBtn.setBorder(new RoundedBorder(25));
         cancelBtn.setBorder(new RoundedBorder(25));
         registerBtn.setBorder(new RoundedBorder(25));
@@ -24,18 +35,48 @@ public class AuthWindow extends JFrame {
         loginPanel.setVisible(true);
         signUpPanel.setVisible(false);
 
-        signUpBtn.addActionListener(e -> {
-            signUpPanel.setVisible(true);
-            loginPanel.setVisible(false);
-            repaint();
-        });
+        signUpBtn.addActionListener(new SignUpAction());
+        LoginBtn.addActionListener(new LoginAction());
+        loginBtn.addActionListener(new userLoginAction());
+        registerBtn.addActionListener(new userSignUpAction());
 
-        LoginBtn.addActionListener(e -> {
-            loginPanel.setVisible(true);
-            signUpPanel.setVisible(false);
-            repaint();
-        });
+    }
 
+    public HttpPost getHttpPostForLogin() {
+        HttpPost httpPost = new HttpPost("http://localhost:8000/auth/login");
+
+        // Установите тело запроса (например, JSON)
+        String requestBody = null;
+        if (loginField.getText().contains("@")){
+            requestBody = String.format("{email:\"%s\"}", loginField.getText());
+        }else{
+            requestBody = String.format("{login:\"%s\"}", loginField.getText());
+        }
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(requestBody);
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
+        httpPost.setEntity(entity);
+        return httpPost;
+    }
+
+    public HttpPost getHttpPostForRegister() {
+        HttpPost httpPost = new HttpPost("http://localhost:8000/auth/register");
+
+        // Установите тело запроса (например, JSON)
+        String requestBody = String.format("{login: \"%s\", email:\"%s\", password: \"%s\", firstName: \"%s\", secondName: \"%s\"}",
+                loginField2.getText(), emailField.getText(), Arrays.toString(passwordField2.getPassword()), firstNameField.getText(), secondNameField.getText());
+
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(requestBody);
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
+        httpPost.setEntity(entity);
+        return httpPost;
     }
 
     private void initComponents() {
@@ -46,7 +87,7 @@ public class AuthWindow extends JFrame {
         signUpPanel = new JPanel();
         loginField2 = new JTextField();
         loginL2 = new JLabel();
-        emailFIeld = new JTextField();
+        emailField = new JTextField();
         emailL = new JLabel();
         firstNameField = new JTextField();
         firstNameL = new JLabel();
@@ -56,12 +97,15 @@ public class AuthWindow extends JFrame {
         passwordL2 = new JLabel();
         registerBtn = new JButton();
         cancelBtn = new JButton();
+        wrongLogin = new JLabel();
+        wrongEmail = new JLabel();
         loginPanel = new JPanel();
         loginField = new JTextField();
         loginL = new JLabel();
         passwordL = new JLabel();
         passwordField1 = new JPasswordField();
         loginBtn = new JButton();
+        responseL = new JLabel();
 
         //======== this ========
         setBackground(new Color(0x333333));
@@ -81,7 +125,7 @@ public class AuthWindow extends JFrame {
 
         //---- signUpBtn ----
         signUpBtn.setText("Sign Up");
-        signUpBtn.setBorder(new MatteBorder(0, 0, 3, 0, Color.white));
+        signUpBtn.setBorder(null);
         signUpBtn.setFont(new Font("Manrope ExtraBold", Font.BOLD, 17));
         signUpBtn.setBackground(new Color(0x333333));
         signUpBtn.setForeground(Color.white);
@@ -93,18 +137,19 @@ public class AuthWindow extends JFrame {
         //======== signUpPanel ========
         {
             signUpPanel.setBackground(new Color(0x333333));
-            signUpPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder
-            ( 0, 0 ,0 , 0) ,  "" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border
-            .TitledBorder . BOTTOM, new java. awt .Font ( "Dialo\u0067", java .awt . Font. BOLD ,12 ) ,java . awt
-            . Color .red ) ,signUpPanel. getBorder () ) ); signUpPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void
-            propertyChange (java . beans. PropertyChangeEvent e) { if( "borde\u0072" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
-            ;} } );
+            signUpPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
+            . EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax. swing. border. TitledBorder. CENTER, javax
+            . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,
+            12 ), java. awt. Color. red) ,signUpPanel. getBorder( )) ); signUpPanel. addPropertyChangeListener (new java. beans
+            . PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .equals (e .
+            getPropertyName () )) throw new RuntimeException( ); }} );
             signUpPanel.setLayout(null);
 
             //---- loginField2 ----
             loginField2.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
             loginField2.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
             loginField2.setBackground(new Color(0x333333));
+            loginField2.setForeground(Color.white);
             signUpPanel.add(loginField2);
             loginField2.setBounds(80, 215, 230, 34);
 
@@ -115,12 +160,13 @@ public class AuthWindow extends JFrame {
             signUpPanel.add(loginL2);
             loginL2.setBounds(80, 195, 36, 16);
 
-            //---- emailFIeld ----
-            emailFIeld.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
-            emailFIeld.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
-            emailFIeld.setBackground(new Color(0x333333));
-            signUpPanel.add(emailFIeld);
-            emailFIeld.setBounds(80, 280, 230, 34);
+            //---- emailField ----
+            emailField.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
+            emailField.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
+            emailField.setBackground(new Color(0x333333));
+            emailField.setForeground(Color.white);
+            signUpPanel.add(emailField);
+            emailField.setBounds(80, 280, 230, 34);
 
             //---- emailL ----
             emailL.setText("email");
@@ -133,6 +179,7 @@ public class AuthWindow extends JFrame {
             firstNameField.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
             firstNameField.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
             firstNameField.setBackground(new Color(0x333333));
+            firstNameField.setForeground(Color.white);
             signUpPanel.add(firstNameField);
             firstNameField.setBounds(80, 415, 230, 34);
 
@@ -147,6 +194,7 @@ public class AuthWindow extends JFrame {
             secondNameField.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
             secondNameField.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
             secondNameField.setBackground(new Color(0x333333));
+            secondNameField.setForeground(Color.white);
             signUpPanel.add(secondNameField);
             secondNameField.setBounds(80, 480, 230, 34);
 
@@ -161,6 +209,7 @@ public class AuthWindow extends JFrame {
             passwordField2.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
             passwordField2.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
             passwordField2.setBackground(new Color(0x333333));
+            passwordField2.setForeground(Color.white);
             signUpPanel.add(passwordField2);
             passwordField2.setBounds(80, 345, 230, 34);
 
@@ -191,6 +240,22 @@ public class AuthWindow extends JFrame {
             signUpPanel.add(cancelBtn);
             cancelBtn.setBounds(85, 540, 100, 35);
 
+            //---- wrongLogin ----
+            wrongLogin.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/wrong.png")));
+            wrongLogin.setBackground(Color.red);
+            wrongLogin.setForeground(new Color(0xcc0000));
+            wrongLogin.setVisible(false);
+            signUpPanel.add(wrongLogin);
+            wrongLogin.setBounds(320, 225, 25, 25);
+
+            //---- wrongEmail ----
+            wrongEmail.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/wrong.png")));
+            wrongEmail.setBackground(Color.red);
+            wrongEmail.setForeground(new Color(0xcc0000));
+            wrongEmail.setVisible(false);
+            signUpPanel.add(wrongEmail);
+            wrongEmail.setBounds(320, 290, 25, 25);
+
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
@@ -207,7 +272,7 @@ public class AuthWindow extends JFrame {
             }
         }
         contentPane.add(signUpPanel);
-        signUpPanel.setBounds(0, -40, 405, 610);
+        signUpPanel.setBounds(0, -40, 400, 610);
 
         //======== loginPanel ========
         {
@@ -219,6 +284,7 @@ public class AuthWindow extends JFrame {
             loginField.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
             loginField.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
             loginField.setBackground(new Color(0x333333));
+            loginField.setForeground(Color.white);
             loginPanel.add(loginField);
             loginField.setBounds(75, 225, 230, loginField.getPreferredSize().height);
 
@@ -240,8 +306,9 @@ public class AuthWindow extends JFrame {
             passwordField1.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 20));
             passwordField1.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
             passwordField1.setBackground(new Color(0x333333));
+            passwordField1.setForeground(Color.white);
             loginPanel.add(passwordField1);
-            passwordField1.setBounds(80, 305, 230, passwordField1.getPreferredSize().height);
+            passwordField1.setBounds(75, 305, 230, passwordField1.getPreferredSize().height);
 
             //---- loginBtn ----
             loginBtn.setText("Login");
@@ -252,6 +319,14 @@ public class AuthWindow extends JFrame {
             loginBtn.setFocusPainted(false);
             loginPanel.add(loginBtn);
             loginBtn.setBounds(145, 375, 100, 35);
+
+            //---- responseL ----
+            responseL.setText("Wrong login or password");
+            responseL.setHorizontalAlignment(SwingConstants.CENTER);
+            responseL.setForeground(new Color(0x990000));
+            responseL.setVisible(false);
+            loginPanel.add(responseL);
+            responseL.setBounds(75, 345, 230, responseL.getPreferredSize().height);
 
             {
                 // compute preferred size
@@ -269,7 +344,7 @@ public class AuthWindow extends JFrame {
             }
         }
         contentPane.add(loginPanel);
-        loginPanel.setBounds(0, -40, 405, 610);
+        loginPanel.setBounds(0, -40, 400, 610);
 
         {
             // compute preferred size
@@ -292,12 +367,12 @@ public class AuthWindow extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     // Generated using JFormDesigner Evaluation license - Misha
-    private JButton LoginBtn;
-    private JButton signUpBtn;
-    private JPanel signUpPanel;
+    public JButton LoginBtn;
+    public JButton signUpBtn;
+    public JPanel signUpPanel;
     private JTextField loginField2;
     private JLabel loginL2;
-    private JTextField emailFIeld;
+    private JTextField emailField;
     private JLabel emailL;
     private JTextField firstNameField;
     private JLabel firstNameL;
@@ -307,12 +382,15 @@ public class AuthWindow extends JFrame {
     private JLabel passwordL2;
     private JButton registerBtn;
     private JButton cancelBtn;
-    private JPanel loginPanel;
+    public JLabel wrongLogin;
+    public JLabel wrongEmail;
+    public JPanel loginPanel;
     private JTextField loginField;
     private JLabel loginL;
     private JLabel passwordL;
-    private JPasswordField passwordField1;
+    public JPasswordField passwordField1;
     private JButton loginBtn;
+    public JLabel responseL;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     
 

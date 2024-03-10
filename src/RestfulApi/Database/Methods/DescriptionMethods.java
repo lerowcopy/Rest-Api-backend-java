@@ -1,5 +1,6 @@
 package RestfulApi.Database.Methods;
 
+import RestfulApi.Database.Database;
 import RestfulApi.Database.Methods.Interface.MethodsInterface;
 
 import java.math.BigInteger;
@@ -69,12 +70,18 @@ public class DescriptionMethods implements MethodsInterface {
         Response response;
 
         StringBuilder sql = PostRequest(queryParams);
-        execute(con, sql.toString());
-
-        String emailUser = GetUserId(queryParams);
-        sql = new StringBuilder(String.format("SELECT * FROM User WHERE email = '%s'", emailUser));
-
         PreparedStatement ps = con.prepareStatement(sql.toString());
+
+        try {
+            ps.execute();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        int idP = GetUserId(queryParams);
+        sql = new StringBuilder(String.format("SELECT * FROM User WHERE id = %d", idP));
+
+        ps = con.prepareStatement(sql.toString());
         ResultSet resultSet = ps.executeQuery();
 
         if (resultSet.isClosed()) {
@@ -183,14 +190,25 @@ public class DescriptionMethods implements MethodsInterface {
         return gson.toJson(response);
     }
 
-    private String GetUserId(Map<String, String> queryParams) {
-        String emailUser = "";
+    private int GetUserId(Map<String, String> queryParams) throws SQLException {
+        int id = -1;
+        String sql = null;
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-            if (entry.getKey().equals("email")) {
-                emailUser = (entry.getValue());
+            if (entry.getKey().equals("email") && !entry.getValue().equals("null")) {
+                sql = String.format("SELECT * FROM user WHERE email = '%s'", entry.getValue());
+                break;
+            }
+            else if (entry.getKey().equals("login") && !entry.getValue().equals("null")){
+                sql = String.format("SELECT * FROM user WHERE login = '%s'", entry.getValue());
+                break;
             }
         }
-        return emailUser;
+
+        PreparedStatement ps = Database.con.prepareStatement(sql);
+        ResultSet resultSet = ps.executeQuery();
+
+        id = resultSet.getInt("id");
+        return id;
     }
 
     private StringBuilder GetRequest(Map<String, String> queryParams) {
@@ -323,7 +341,7 @@ public class DescriptionMethods implements MethodsInterface {
         return sql;
     }
 
-    public String hex(String str, int k) {
+    public static String hex(String str, int k) {
 
         byte[] messageDigest = new byte[0];
         str += "abrakadabra";
