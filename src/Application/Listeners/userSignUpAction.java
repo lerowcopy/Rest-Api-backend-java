@@ -23,20 +23,15 @@ public class userSignUpAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = authWindow.getHttpPostForRegister();
-        authWindow.responseL.setVisible(true);
         try {
             CloseableHttpResponse response = httpClient.execute(httpPost);
             try {
                 HttpEntity responseEntity = response.getEntity();
-                System.out.println(EntityUtils.toString(responseEntity));
-                if (responseEntity != null) {
-                    authWindow.wrongLogin.setVisible(true);
-                    authWindow.wrongLogin.setVisible(true);
-                }else{
-                    authWindow.signUpBtn.setBorder(new MatteBorder(0,0, 2,0, Color.WHITE));
-                    authWindow.LoginBtn.setBorder(null);
-                    authWindow.signUpPanel.setVisible(true);
-                    authWindow.loginPanel.setVisible(false);
+                if (!authWindow.wrongLogin.isVisible() && !authWindow.wrongEmail.isVisible()) {
+                    authWindow.LoginBtn.setBorder(new MatteBorder(0,0, 2,0, Color.WHITE));
+                    authWindow.signUpBtn.setBorder(null);
+                    authWindow.loginPanel.setVisible(true);
+                    authWindow.signUpPanel.setVisible(false);
                     authWindow.repaint();
                 }
             } finally {

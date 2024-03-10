@@ -41,7 +41,7 @@ public class LoginController implements HttpHandler {
 
         String response = null;
         try {
-            response = database.POST(Database.con, param);
+            response = database.POST(Database.con, param, "login");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

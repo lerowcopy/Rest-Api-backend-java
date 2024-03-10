@@ -44,7 +44,7 @@ public class RegisterController implements HttpHandler {
 
             String response = null;
             try {
-                response = database.POST(Database.con, param);
+                response = database.POST(Database.con, param, "register");
                 RestHttpServer.sendResponse(exchange, 201, response);
             } catch (SQLException e) {
                 throw new RuntimeException(e);

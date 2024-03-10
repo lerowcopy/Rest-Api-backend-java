@@ -28,7 +28,10 @@ public class userLoginAction implements ActionListener {
                 HttpEntity responseEntity = response.getEntity();
                 if (responseEntity != null) {
                     String password = new String(authWindow.passwordField1.getPassword());
-                    if (EntityUtils.toString(responseEntity).contains(String.format("\"password\":\"%s\"", hex(password, 10)))) {
+                    String entity = EntityUtils.toString(responseEntity);
+                    String hexP = hex(password, 10);
+
+                    if (entity.contains(String.format("\"password\":\"%s\"", hexP))) {
                         authWindow.responseL.setForeground(Color.GREEN);
                         authWindow.responseL.setText("Login successful");
                         authWindow.repaint();
@@ -39,13 +42,14 @@ public class userLoginAction implements ActionListener {
                         authWindow.responseL.setText("Wrong login or password");
                         authWindow.repaint();
                     }
-                    //System.out.println(EntityUtils.toString(responseEntity));
                 }
             } finally {
                 response.close();
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            authWindow.responseL.setForeground(Color.RED);
+            authWindow.responseL.setText("Wrong login or password");
+            authWindow.repaint();
         }
     }
 }

@@ -63,7 +63,7 @@ public class ControllersDescription implements ControllersInterface {
 
             Map<String, String> param = queryToMap(query);
 
-            String response = database.POST(Database.con, param);
+            String response = database.POST(Database.con, param, "api");
             RestHttpServer.sendResponse(exchange, 201, response);
         }
     }

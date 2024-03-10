@@ -62,7 +62,7 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
-    public String POST(Connection con, Map<String, String> queryParams) throws SQLException {
+    public String POST(Connection con, Map<String, String> queryParams, String path) throws SQLException {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
 
@@ -75,7 +75,12 @@ public class DescriptionMethods implements MethodsInterface {
         try {
             ps.execute();
         }catch (SQLException e){
-            System.out.println(e.getMessage());
+            if (path.equals("login") || path.equals("api")){
+                System.out.println(e.getMessage());
+            }else{
+                return "BR";
+
+            }
         }
 
         int idP = GetUserId(queryParams);
