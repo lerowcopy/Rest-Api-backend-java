@@ -109,6 +109,8 @@ public class AuthWindow extends JFrame {
         cancelBtn = new JButton();
         wrongLogin = new JLabel();
         wrongEmail = new JLabel();
+        okLogin = new JLabel();
+        okEmail = new JLabel();
         loginPanel = new JPanel();
         loginField = new JTextField();
         loginL = new JLabel();
@@ -147,13 +149,13 @@ public class AuthWindow extends JFrame {
         //======== signUpPanel ========
         {
             signUpPanel.setBackground(new Color(0x333333));
-            signUpPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
-            javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax
-            . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
-            .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
-            . Color. red) ,signUpPanel. getBorder( )) ); signUpPanel. addPropertyChangeListener (new java. beans.
-            PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .
-            equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+            signUpPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing
+            . border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder
+            . CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .
+            awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,signUpPanel. getBorder () ) )
+            ; signUpPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+            ) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } )
+            ;
             signUpPanel.setLayout(null);
 
             //---- loginField2 ----
@@ -266,6 +268,20 @@ public class AuthWindow extends JFrame {
             wrongEmail.setVisible(false);
             signUpPanel.add(wrongEmail);
             wrongEmail.setBounds(320, 290, 25, 25);
+
+            //---- okLogin ----
+            okLogin.setText("text");
+            okLogin.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/ok.png")));
+            okLogin.setVisible(false);
+            signUpPanel.add(okLogin);
+            okLogin.setBounds(320, 225, 25, 25);
+
+            //---- okEmail ----
+            okEmail.setText("text");
+            okEmail.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/ok.png")));
+            okEmail.setVisible(false);
+            signUpPanel.add(okEmail);
+            okEmail.setBounds(320, 290, 25, 25);
 
             {
                 // compute preferred size
@@ -385,16 +401,18 @@ public class AuthWindow extends JFrame {
     private JLabel loginL2;
     public JTextField emailField;
     private JLabel emailL;
-    private JTextField firstNameField;
+    public JTextField firstNameField;
     private JLabel firstNameL;
-    private JTextField secondNameField;
+    public JTextField secondNameField;
     private JLabel secondNameL;
-    private JPasswordField passwordField2;
+    public JPasswordField passwordField2;
     private JLabel passwordL2;
     private JButton registerBtn;
     private JButton cancelBtn;
     public JLabel wrongLogin;
     public JLabel wrongEmail;
+    public JLabel okLogin;
+    public JLabel okEmail;
     public JPanel loginPanel;
     private JTextField loginField;
     private JLabel loginL;

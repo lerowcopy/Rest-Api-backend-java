@@ -26,6 +26,10 @@ public class LoginDocument implements DocumentListener {
 
     @Override
     public void changedUpdate(DocumentEvent e) {
+        if (!authWindow.loginField2.getText().isEmpty() && !authWindow.wrongLogin.isVisible()) {
+            authWindow.okLogin.setVisible(true);
+        }
+
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(String.format("http://localhost:8000/api?login=%s", authWindow.loginField2.getText()));
 
@@ -36,8 +40,10 @@ public class LoginDocument implements DocumentListener {
                 String entityS = EntityUtils.toString(entity);
                 if (entityS.contains("\"status\":\"success\"")) {
                     authWindow.wrongLogin.setVisible(true);
+                    authWindow.okLogin.setVisible(false);
                 } else if (entityS.contains("failed")) {
                     authWindow.wrongLogin.setVisible(false);
+                    authWindow.okLogin.setVisible(true);
                 }
             }
         } catch (IOException ex) {

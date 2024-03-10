@@ -26,6 +26,9 @@ public class EmailDocument implements DocumentListener {
 
     @Override
     public void changedUpdate(DocumentEvent e) {
+        if (!authWindow.emailField.getText().isEmpty() && !authWindow.wrongEmail.isVisible()) {
+            authWindow.okEmail.setVisible(true);
+        }
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(String.format("http://localhost:8000/api?email=%s", authWindow.emailField.getText()));
 
@@ -36,8 +39,10 @@ public class EmailDocument implements DocumentListener {
                 String entityS = EntityUtils.toString(entity);
                 if (entityS.contains("\"status\":\"success\"")) {
                     authWindow.wrongEmail.setVisible(true);
+                    authWindow.okEmail.setVisible(false);
                 } else if (entityS.contains("failed")) {
                     authWindow.wrongEmail.setVisible(false);
+                    authWindow.okEmail.setVisible(true);
                 }
             }
         } catch (IOException ex) {
