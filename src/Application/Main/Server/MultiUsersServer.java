@@ -1,5 +1,6 @@
 package Application.Main.Server;
 
+import javax.management.remote.JMXServerErrorException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -16,7 +17,7 @@ public class MultiUsersServer {
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("Server started on port " + port);
 
-        while (true){
+        while (true) {
             Socket clientSocket = serverSocket.accept();
             System.out.println("New client connected " + clientSocket.getInetAddress().getHostAddress());
 
@@ -35,6 +36,7 @@ public class MultiUsersServer {
         public ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
+
         @Override
         public void run() {
             try {
@@ -56,6 +58,8 @@ public class MultiUsersServer {
                 clients.remove(this);
                 try {
                     clientSocket.close();
+                    in.close();
+                    out.close();
                 } catch (IOException e) {
                     System.err.println("Error closing client socket: " + e.getMessage());
                 }
@@ -64,7 +68,13 @@ public class MultiUsersServer {
 
         private void broadcastMessage(String message) {
             for (ClientHandler client : clients) {
-                client.sendMessage(message);
+                String f = null;
+                if (message.contains(":")){
+                    f = message.substring(0, message.indexOf(":"));
+                }
+                if (!client.username.equals(f)) {
+                    client.sendMessage(message);
+                }
             }
         }
 

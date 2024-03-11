@@ -1,0 +1,52 @@
+JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
+			name: "this"
+			"$sizePolicy": 2
+			"$locationPolicy": 1
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "0:0.01, 0:0.01"
+					"$rowSpecs": "0:0.01"
+					"$alignTop": true
+					"$alignLeft": true
+				} ) {
+					name: "panel1"
+					"background": new java.awt.Color( 51, 51, 51, 255 )
+					add( new FormComponent( "javax.swing.JTextArea" ) {
+						name: "LeftArea"
+						"background": new java.awt.Color( 51, 51, 51, 255 )
+						"lineWrap": true
+						"foreground": new java.awt.Color( 255, 255, 255, 255 )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 9
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"hAlign": 2
+						"vAlign": 1
+					} )
+					add( new FormComponent( "javax.swing.JTextArea" ) {
+						name: "RightArea"
+						"background": new java.awt.Color( 51, 51, 51, 255 )
+						"lineWrap": true
+						"foreground": new java.awt.Color( 255, 255, 255, 255 )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 9
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+						"hAlign": 4
+						"vAlign": 1
+					} )
+				} )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 785, 540 )
+		} )
+	}
+}

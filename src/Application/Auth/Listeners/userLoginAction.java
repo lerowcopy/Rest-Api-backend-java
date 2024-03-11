@@ -34,6 +34,8 @@ public class userLoginAction implements ActionListener {
 
                     if (entity.contains(String.format("\"password\":\"%s\"", hexP))) {
                         MainWindow wnd = new MainWindow(authWindow.loginField.getText());
+                        wnd.setVisible(true);
+                        authWindow.dispose();
                         authWindow.responseL.setForeground(Color.GREEN);
                         authWindow.responseL.setText("Login successful");
                         authWindow.repaint();
