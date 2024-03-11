@@ -2,27 +2,16 @@
  * Created by JFormDesigner on Sat Mar 09 22:09:50 MSK 2024
  */
 
-package Application;
+package Application.Auth;
 
-import Application.Listeners.*;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import Application.Auth.Listeners.*;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
 import java.awt.*;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  * @author 79531
@@ -149,13 +138,13 @@ public class AuthWindow extends JFrame {
         //======== signUpPanel ========
         {
             signUpPanel.setBackground(new Color(0x333333));
-            signUpPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing
-            . border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder
-            . CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .
-            awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,signUpPanel. getBorder () ) )
-            ; signUpPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
-            ) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } )
-            ;
+            signUpPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax.
+            swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border
+            . TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog"
+            ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,signUpPanel. getBorder
+            ( )) ); signUpPanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java
+            .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException
+            ( ); }} );
             signUpPanel.setLayout(null);
 
             //---- loginField2 ----
@@ -254,7 +243,7 @@ public class AuthWindow extends JFrame {
             cancelBtn.setBounds(85, 540, 100, 35);
 
             //---- wrongLogin ----
-            wrongLogin.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/wrong.png")));
+            wrongLogin.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/wrong.png")));
             wrongLogin.setBackground(Color.red);
             wrongLogin.setForeground(new Color(0xcc0000));
             wrongLogin.setVisible(false);
@@ -262,7 +251,7 @@ public class AuthWindow extends JFrame {
             wrongLogin.setBounds(320, 225, 25, 25);
 
             //---- wrongEmail ----
-            wrongEmail.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/wrong.png")));
+            wrongEmail.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/wrong.png")));
             wrongEmail.setBackground(Color.red);
             wrongEmail.setForeground(new Color(0xcc0000));
             wrongEmail.setVisible(false);
@@ -271,14 +260,14 @@ public class AuthWindow extends JFrame {
 
             //---- okLogin ----
             okLogin.setText("text");
-            okLogin.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/ok.png")));
+            okLogin.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/ok.png")));
             okLogin.setVisible(false);
             signUpPanel.add(okLogin);
             okLogin.setBounds(320, 225, 25, 25);
 
             //---- okEmail ----
             okEmail.setText("text");
-            okEmail.setIcon(new ImageIcon(getClass().getResource("/Application/Icons/ok.png")));
+            okEmail.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/ok.png")));
             okEmail.setVisible(false);
             signUpPanel.add(okEmail);
             okEmail.setBounds(320, 290, 25, 25);
@@ -414,7 +403,7 @@ public class AuthWindow extends JFrame {
     public JLabel okLogin;
     public JLabel okEmail;
     public JPanel loginPanel;
-    private JTextField loginField;
+    public JTextField loginField;
     private JLabel loginL;
     private JLabel passwordL;
     public JPasswordField passwordField1;

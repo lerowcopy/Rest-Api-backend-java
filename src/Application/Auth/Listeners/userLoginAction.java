@@ -1,6 +1,7 @@
-package Application.Listeners;
+package Application.Auth.Listeners;
 
-import Application.AuthWindow;
+import Application.Auth.AuthWindow;
+import Application.Main.MainWindow;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -32,6 +33,7 @@ public class userLoginAction implements ActionListener {
                     String hexP = hex(password, 10);
 
                     if (entity.contains(String.format("\"password\":\"%s\"", hexP))) {
+                        MainWindow wnd = new MainWindow(authWindow.loginField.getText());
                         authWindow.responseL.setForeground(Color.GREEN);
                         authWindow.responseL.setText("Login successful");
                         authWindow.repaint();

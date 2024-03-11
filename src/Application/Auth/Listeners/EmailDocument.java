@@ -1,6 +1,6 @@
-package Application.Listeners;
+package Application.Auth.Listeners;
 
-import Application.AuthWindow;
+import Application.Auth.AuthWindow;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;

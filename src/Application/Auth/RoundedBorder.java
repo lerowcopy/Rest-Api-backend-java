@@ -1,4 +1,4 @@
-package Application;
+package Application.Auth;
 
 import javax.swing.border.Border;
 import java.awt.*;

@@ -208,7 +208,7 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "wrongLogin"
-					"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/Application/Icons/wrong.png" )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/wrong.png" )
 					"background": &Color6 new java.awt.Color( 255, 0, 0, 255 )
 					"foreground": &Color7 new java.awt.Color( 204, 0, 0, 255 )
 					"visible": false
@@ -223,7 +223,7 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "wrongEmail"
-					"icon": #SwingIcon0
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/wrong.png" )
 					"background": #Color6
 					"foreground": #Color7
 					"visible": false
@@ -239,7 +239,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "okLogin"
 					"text": "text"
-					"icon": &SwingIcon1 new com.jformdesigner.model.SwingIcon( 0, "/Application/Icons/ok.png" )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/ok.png" )
 					"visible": false
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 1
@@ -253,7 +253,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "okEmail"
 					"text": "text"
-					"icon": #SwingIcon1
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/ok.png" )
 					"visible": false
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 1
@@ -283,6 +283,9 @@ new FormModel {
 					"font": #Font0
 					"background": #Color0
 					"foreground": new java.awt.Color( 255, 255, 255, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 1
+					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 75
 					"y": 225

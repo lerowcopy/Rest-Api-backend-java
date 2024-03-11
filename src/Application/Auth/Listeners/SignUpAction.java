@@ -1,6 +1,6 @@
-package Application.Listeners;
+package Application.Auth.Listeners;
 
-import Application.AuthWindow;
+import Application.Auth.AuthWindow;
 
 import javax.swing.border.MatteBorder;
 import java.awt.*;
