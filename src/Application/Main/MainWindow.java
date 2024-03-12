@@ -10,6 +10,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -34,51 +36,33 @@ public class MainWindow extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - Misha
         scrollPane1 = new JScrollPane();
-        panel1 = new JPanel();
-        LeftArea = new JTextArea();
-        RightArea = new JTextArea();
+        chatPanel = new JPanel();
+        label2 = new JLabel();
 
         //======== this ========
         var contentPane = getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        contentPane.setLayout(new BorderLayout());
 
         //======== scrollPane1 ========
         {
 
-            //======== panel1 ========
+            //======== chatPanel ========
             {
-                panel1.setBackground(new Color(0x333333));
-                panel1.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
-                .EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax.swing.border.TitledBorder.CENTER,javax
-                .swing.border.TitledBorder.BOTTOM,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,
-                12),java.awt.Color.red),panel1. getBorder()));panel1. addPropertyChangeListener(new java.beans
-                .PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".equals(e.
-                getPropertyName()))throw new RuntimeException();}});
-                panel1.setLayout(new GridBagLayout());
-                ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0, 0};
-                ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0};
-                ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.01, 0.01, 1.0E-4};
-                ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.01, 1.0E-4};
+                chatPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing.
+                border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER
+                ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font
+                . BOLD ,12 ) ,java . awt. Color .red ) ,chatPanel. getBorder () ) ); chatPanel. addPropertyChangeListener(
+                new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r"
+                .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+                chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
 
-                //---- LeftArea ----
-                LeftArea.setBackground(new Color(0x333333));
-                LeftArea.setLineWrap(true);
-                LeftArea.setForeground(Color.white);
-                panel1.add(LeftArea, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-                    new Insets(0, 0, 0, 0), 0, 0));
-
-                //---- RightArea ----
-                RightArea.setBackground(new Color(0x333333));
-                RightArea.setLineWrap(true);
-                RightArea.setForeground(Color.white);
-                panel1.add(RightArea, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.NORTHEAST, GridBagConstraints.NONE,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                //---- label2 ----
+                label2.setText("text");
+                chatPanel.add(label2);
             }
-            scrollPane1.setViewportView(panel1);
+            scrollPane1.setViewportView(chatPanel);
         }
-        contentPane.add(scrollPane1);
+        contentPane.add(scrollPane1, BorderLayout.CENTER);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -86,11 +70,12 @@ public class MainWindow extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     // Generated using JFormDesigner Evaluation license - Misha
     private JScrollPane scrollPane1;
-    private JPanel panel1;
-    public static JTextArea LeftArea;
-    public static JTextArea RightArea;
+    public static JPanel chatPanel;
+    private JLabel label2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+    
 
+    public static List<JLabel> messages = new ArrayList<>();
     public static class ClientPart {
         private static final String SERVER_ADDRESS = "localhost";
         private static final int SERVER_PORT = 8021;
@@ -112,22 +97,57 @@ public class MainWindow extends JFrame {
                     /*String message = in.nextLine();
                     System.out.println(message);*/
                     String message = in.nextLine();
-                    if (message.contains("joined")){
+                    if (message.contains("joined")) {
                         continue;
                     }
-                    String substring = message.substring(message.indexOf(username) + username.length());
-                    if (message.contains(username)) {
-                        if (RightArea != null) {
-                            RightArea.setText(RightArea.getText() + "\n" + username + ": " + substring);
+                    int f = 0;
+                    if (message.contains(":")) {
+                        String userMessage = message.substring((message.indexOf(":") + 2));
+                        JLabel messag = new JLabel();
+
+                        int count = 0;
+                        for (int i = 0; i < message.length(); ++i){
+                            if (count == 10){
+                                String first = message.substring(0, i);
+                                String second = message.substring(i);
+                                message = first + "<br/>" + second;
+                                f+= 1;
+                                count = -1;
+                            }
+                            count += 1;
                         }
-                    }
-                    else{
-                        if (LeftArea != null){
-                            LeftArea.setText(LeftArea.getText() + "\n" + username + ": " + substring);
+
+                        if (f != 0){
+                            messag.setMaximumSize(new Dimension(3000, 18 * (f + 1)));
                         }
+                        else{
+                            messag.setMaximumSize(new Dimension(3000, 18));
+                        }
+                        if (message.substring(0, message.indexOf(":")).equals(username)){
+                            messag.setHorizontalAlignment(JLabel.RIGHT);
+                        }
+                        message = "<html>" + message + "</html>";
+                        messag.setText(message);
+                        messag.setForeground(Color.BLACK);
+                        chatPanel.add(messag);
+
+                        chatPanel.revalidate();
+                        chatPanel.repaint();
+                        /*if (message.substring(0, message.indexOf(":")).equals(username)) {
+                            if (RightArea != null) {
+                                RightArea.setText(RightArea.getText() + userMessage);
+                            } else {
+                                RightArea.setText(userMessage + "\n");
+                            }
+                        } else {
+                            if (LeftArea != null) {
+                                LeftArea.setText(LeftArea.getText() + message + "\n");
+                            } else {
+                                LeftArea.setText(userMessage + "\n");
+                            }
+                        }*/
                     }
                     wnd.repaint();
-                    System.out.println(message);
                 }
             });
 

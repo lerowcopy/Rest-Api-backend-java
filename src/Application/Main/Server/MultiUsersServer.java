@@ -68,13 +68,7 @@ public class MultiUsersServer {
 
         private void broadcastMessage(String message) {
             for (ClientHandler client : clients) {
-                String f = null;
-                if (message.contains(":")){
-                    f = message.substring(0, message.indexOf(":"));
-                }
-                if (!client.username.equals(f)) {
-                    client.sendMessage(message);
-                }
+                client.sendMessage(message);
             }
         }
 
