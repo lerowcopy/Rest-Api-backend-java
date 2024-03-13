@@ -17,13 +17,26 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 9
 					}
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label2"
-						"text": "text"
-					} )
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+				"axis": 0
+			} ) {
+				name: "sendMessagePanel"
+				"preferredSize": new java.awt.Dimension( 0, 50 )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "messageField"
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "sendMessageBtn"
+					"preferredSize": new java.awt.Dimension( 50, 50 )
+					"maximumSize": new java.awt.Dimension( 50, 50 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/send.png" )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Last"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 6, 6 )

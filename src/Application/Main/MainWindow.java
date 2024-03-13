@@ -5,6 +5,8 @@
 package Application.Main;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -28,6 +30,19 @@ public class MainWindow extends JFrame {
         setSize(785, 540);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
+
+        messageField.addActionListener(e -> {
+            if (!messageField.equals("")){
+                ClientPart.sendMessage(messageField.getText());
+                messageField.setText("");
+            }
+        });
+        sendMessageBtn.addActionListener(e ->{
+            if (!messageField.equals("")){
+                ClientPart.sendMessage(messageField.getText());
+                messageField.setText("");
+            }
+        });
     }
 
     private void initComponents() {
@@ -35,7 +50,9 @@ public class MainWindow extends JFrame {
         // Generated using JFormDesigner Evaluation license - Misha
         scrollPane1 = new JScrollPane();
         chatPanel = new JPanel();
-        label2 = new JLabel();
+        sendMessagePanel = new JPanel();
+        messageField = new JTextField();
+        sendMessageBtn = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -47,22 +64,32 @@ public class MainWindow extends JFrame {
 
             //======== chatPanel ========
             {
-                chatPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
-                .border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder
-                .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
-                awt.Font.BOLD,12),java.awt.Color.red),chatPanel. getBorder()))
-                ;chatPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
-                ;
+                chatPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
+                javax.swing.border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax
+                .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
+                .awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt
+                .Color.red),chatPanel. getBorder()));chatPanel. addPropertyChangeListener(new java.beans.
+                PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".
+                equals(e.getPropertyName()))throw new RuntimeException();}});
                 chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
-
-                //---- label2 ----
-                label2.setText("text");
-                chatPanel.add(label2);
             }
             scrollPane1.setViewportView(chatPanel);
         }
         contentPane.add(scrollPane1, BorderLayout.CENTER);
+
+        //======== sendMessagePanel ========
+        {
+            sendMessagePanel.setPreferredSize(new Dimension(0, 50));
+            sendMessagePanel.setLayout(new BoxLayout(sendMessagePanel, BoxLayout.X_AXIS));
+            sendMessagePanel.add(messageField);
+
+            //---- sendMessageBtn ----
+            sendMessageBtn.setPreferredSize(new Dimension(50, 50));
+            sendMessageBtn.setMaximumSize(new Dimension(50, 50));
+            sendMessageBtn.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/send.png")));
+            sendMessagePanel.add(sendMessageBtn);
+        }
+        contentPane.add(sendMessagePanel, BorderLayout.PAGE_END);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -71,11 +98,13 @@ public class MainWindow extends JFrame {
     // Generated using JFormDesigner Evaluation license - Misha
     private JScrollPane scrollPane1;
     public static JPanel chatPanel;
-    private JLabel label2;
+    private JPanel sendMessagePanel;
+    private JTextField messageField;
+    private JButton sendMessageBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
-
     public static List<JLabel> messages = new ArrayList<>();
+
 
     public static class ClientPart {
         private static final String SERVER_ADDRESS = "localhost";
@@ -83,6 +112,7 @@ public class MainWindow extends JFrame {
         public final String username;
         public static int multiplyHeight = 0;
         public static JLabel messageL;
+        static PrintWriter out;
         MainWindow wnd = MainWindow.instance;
 
         public ClientPart(String username) throws IOException {
@@ -91,7 +121,7 @@ public class MainWindow extends JFrame {
             System.out.println("Connected to server at " + SERVER_ADDRESS + ":" + SERVER_PORT);
 
             Scanner in = new Scanner(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            out = new PrintWriter(socket.getOutputStream(), true);
 
             Scanner console = new Scanner(System.in);
 
@@ -129,15 +159,20 @@ public class MainWindow extends JFrame {
             });
 
             out.println(username);
-            Thread outputThread = new Thread(() -> {
+            /*Thread outputThread = new Thread(() -> {
                 while (true) {
+
                     String message = console.nextLine();
                     out.println(message);
                 }
-            });
+            });*/
 
             inputThread.start();
-            outputThread.start();
+            //outputThread.start();
+        }
+
+        public static void sendMessage (String message){
+            out.println(message);
         }
 
         private void setMessageL(String response) {
