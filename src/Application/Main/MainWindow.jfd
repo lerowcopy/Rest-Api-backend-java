@@ -9,6 +9,7 @@ new FormModel {
 			"$locationPolicy": 1
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
+				"maximumSize": new java.awt.Dimension( 43423423, 50023423 )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
 					"axis": 1
 				} ) {

@@ -43,15 +43,17 @@ public class MainWindow extends JFrame {
 
         //======== scrollPane1 ========
         {
+            scrollPane1.setMaximumSize(new Dimension(43423423, 50023423));
 
             //======== chatPanel ========
             {
-                chatPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing.
-                border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER
-                ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font
-                . BOLD ,12 ) ,java . awt. Color .red ) ,chatPanel. getBorder () ) ); chatPanel. addPropertyChangeListener(
-                new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r"
-                .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+                chatPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
+                .border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder
+                .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
+                awt.Font.BOLD,12),java.awt.Color.red),chatPanel. getBorder()))
+                ;chatPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
+                ){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
+                ;
                 chatPanel.setLayout(new BoxLayout(chatPanel, BoxLayout.Y_AXIS));
 
                 //---- label2 ----
@@ -121,19 +123,6 @@ public class MainWindow extends JFrame {
 
                         chatPanel.revalidate();
                         chatPanel.repaint();
-                        /*if (message.substring(0, message.indexOf(":")).equals(username)) {
-                            if (RightArea != null) {
-                                RightArea.setText(RightArea.getText() + userMessage);
-                            } else {
-                                RightArea.setText(userMessage + "\n");
-                            }
-                        } else {
-                            if (LeftArea != null) {
-                                LeftArea.setText(LeftArea.getText() + message + "\n");
-                            } else {
-                                LeftArea.setText(userMessage + "\n");
-                            }
-                        }*/
                     }
                     wnd.repaint();
                 }
