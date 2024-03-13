@@ -4,8 +4,6 @@
 
 package Application.Main;
 
-import com.sun.tools.javac.Main;
-
 import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,13 +71,16 @@ public class MainWindow extends JFrame {
     public static JPanel chatPanel;
     private JLabel label2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-    
+
 
     public static List<JLabel> messages = new ArrayList<>();
+
     public static class ClientPart {
         private static final String SERVER_ADDRESS = "localhost";
         private static final int SERVER_PORT = 8021;
         public final String username;
+        public static int multiplyHeight = 0;
+        public static JLabel messageL;
         MainWindow wnd = MainWindow.instance;
 
         public ClientPart(String username) throws IOException {
@@ -100,36 +101,23 @@ public class MainWindow extends JFrame {
                     if (message.contains("joined")) {
                         continue;
                     }
-                    int f = 0;
+                    messageL = new JLabel();
                     if (message.contains(":")) {
                         String userMessage = message.substring((message.indexOf(":") + 2));
-                        JLabel messag = new JLabel();
+                        String response = null;
 
-                        int count = 0;
-                        for (int i = 0; i < message.length(); ++i){
-                            if (count == 10){
-                                String first = message.substring(0, i);
-                                String second = message.substring(i);
-                                message = first + "<br/>" + second;
-                                f+= 1;
-                                count = -1;
-                            }
-                            count += 1;
+                        if (message.substring(0, message.indexOf(":")).equals(username)) {
+                            messageL.setHorizontalAlignment(JLabel.RIGHT);
+                            response = wrapLine(userMessage, 25);
+                        } else {
+                            response = wrapLine(message, 25);
                         }
+                        System.out.println(response);
 
-                        if (f != 0){
-                            messag.setMaximumSize(new Dimension(3000, 18 * (f + 1)));
-                        }
-                        else{
-                            messag.setMaximumSize(new Dimension(3000, 18));
-                        }
-                        if (message.substring(0, message.indexOf(":")).equals(username)){
-                            messag.setHorizontalAlignment(JLabel.RIGHT);
-                        }
-                        message = "<html>" + message + "</html>";
-                        messag.setText(message);
-                        messag.setForeground(Color.BLACK);
-                        chatPanel.add(messag);
+                        setMessageL(response);
+
+                        chatPanel.add(messageL);
+                        messages.add(messageL);
 
                         chatPanel.revalidate();
                         chatPanel.repaint();
@@ -162,5 +150,31 @@ public class MainWindow extends JFrame {
             inputThread.start();
             outputThread.start();
         }
+
+        private void setMessageL(String response) {
+            messageL.setFont(new Font("Manrope ExtraBold", Font.PLAIN, 14));
+            messageL.setMaximumSize(new Dimension(3000, 22 * (multiplyHeight + 1)));
+            response = "<html>" + response + "</html>";
+            messageL.setText(response);
+            messageL.setForeground(Color.BLACK);
+        }
+
+        public String wrapLine(String line, int Length) {
+            int count = 0;
+            for (int i = 0; i < line.length(); ++i) {
+                if (count == Length) {
+                    String first = line.substring(0, i);
+                    String second = line.substring(i);
+                    line = first + "<br/>" + second;
+                    multiplyHeight += 1;
+                    count = -1;
+                    i += 4;
+                    //heeeeeeeeeeeeeeeeeeeeeeee<br/>eeeeeeeeeeeeeeeeeeeeyyyyy<br/>yyyyyyyyyyyyyyyyyyyyyyyyy<br/>yyyyyyyyyyyyyyyyyyyyyyyyy<br/>yyyyyyyyyyyy
+                }
+                count += 1;
+            }
+            return line;
+        }
+
     }
 }
