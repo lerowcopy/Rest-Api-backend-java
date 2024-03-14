@@ -1,0 +1,46 @@
+JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"$sizePolicy": 2
+			"$locationPolicy": 1
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				"maximumSize": new java.awt.Dimension( 43423423, 50023423 )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+					"axis": 1
+				} ) {
+					name: "chatPanel"
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 9
+					}
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+				"axis": 0
+			} ) {
+				name: "sendMessagePanel"
+				"preferredSize": new java.awt.Dimension( 0, 50 )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "messageField"
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "sendMessageBtn"
+					"preferredSize": new java.awt.Dimension( 50, 50 )
+					"maximumSize": new java.awt.Dimension( 50, 50 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/send.png" )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Last"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 6, 6 )
+			"size": new java.awt.Dimension( 658, 430 )
+		} )
+	}
+}
