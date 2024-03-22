@@ -1,0 +1,52 @@
+JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+			"$columnSpecs": "0:1.0, 0"
+			"$rowSpecs": "41, 0:1.0"
+			"$alignLeft": true
+			"$alignTop": true
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "searchField"
+				"preferredSize": new java.awt.Dimension( 350, 30 )
+				"minimumSize": new java.awt.Dimension( 370, 35 )
+				"border": new javax.swing.border.MatteBorder( 0, 0, 1, 0, sfield java.awt.Color black )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"insets": new java.awt.Insets( 5, 10, 5, 10 )
+				"hAlign": 5
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "searchBtn"
+				"text": "search"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"horizontalAlignment": 2
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 1
+				"insets": new java.awt.Insets( 5, 5, 5, 40 )
+				"hAlign": 2
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane"
+				"minimumSize": new java.awt.Dimension( 333, 2222 )
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+					"axis": 1
+				} ) {
+					name: "usersPanel"
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 1
+				"gridwidth": 2
+				"insets": new java.awt.Insets( 5, 5, 5, 5 )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}

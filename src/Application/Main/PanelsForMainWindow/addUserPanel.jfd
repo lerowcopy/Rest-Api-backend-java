@@ -1,0 +1,49 @@
+JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+			"$columnSpecs": "left:80, 0:1.0, 0"
+			"$rowSpecs": "center:0:1.0"
+			"$alignTop": true
+			"$alignLeft": true
+		} ) {
+			name: "this"
+			"preferredSize": new java.awt.Dimension( 105, 80 )
+			"minimumSize": new java.awt.Dimension( 105, 80 )
+			"maximumSize": new java.awt.Dimension( 2147483647, 2147483647 )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userIcon"
+				"text": "icon"
+				"maximumSize": new java.awt.Dimension( 70, 80 )
+				"minimumSize": new java.awt.Dimension( 70, 80 )
+				"preferredSize": new java.awt.Dimension( 70, 80 )
+				"opaque": true
+				"horizontalAlignment": 0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"insets": new java.awt.Insets( 5, 5, 5, 5 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userLogin"
+				"text": "login"
+				"font": new java.awt.Font( "Manrope ExtraBold", 0, 16 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 1
+				"insets": new java.awt.Insets( 0, 0, 25, 0 )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "addBtn"
+				"text": "add"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"maximumSize": new java.awt.Dimension( 72, 35 )
+				"minimumSize": new java.awt.Dimension( 72, 35 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 2
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 410, 66 )
+		} )
+	}
+}

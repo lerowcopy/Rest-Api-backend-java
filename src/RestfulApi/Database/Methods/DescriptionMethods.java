@@ -62,6 +62,18 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
+    public List<String> GETUsers(Connection con, String name) throws SQLException {
+        List<String> users = new ArrayList<>();
+        String sql = String.format("SELECT * FROM User WHERE login LIKE '%s'", name + "%");
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet resultSet = ps.executeQuery();
+        while (resultSet.next()) {
+            users.add(resultSet.getString("login"));
+        }
+        return users;
+    }
+
+    @Override
     public String POST(Connection con, Map<String, String> queryParams, String path) throws SQLException {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();

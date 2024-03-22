@@ -27,11 +27,6 @@
     <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client:1.42.3" level="project" />
-    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-books:v1-rev114-1.25.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:26.0-android" level="project" />
-    <orderEntry type="library" name="Maven: io.opencensus:opencensus-api:0.31.1" level="project" />
-    <orderEntry type="library" name="Maven: io.opencensus:opencensus-contrib-http-util:0.31.1" level="project" />
-    <orderEntry type="library" name="Maven: io.grpc:grpc-context:1.27.2" level="project" />
   </component>
 </module>
