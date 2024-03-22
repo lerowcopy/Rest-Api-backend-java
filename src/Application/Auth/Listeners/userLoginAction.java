@@ -1,8 +1,7 @@
 package Application.Auth.Listeners;
 
 import Application.Auth.AuthWindow;
-import Application.Main.MainWindow;
-import Application.Main.PanelsForMainWindow.ChatPanel;
+import Application.Main.ApplicationWindow;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -34,7 +33,7 @@ public class userLoginAction implements ActionListener {
                     String hexP = hex(password, 10);
 
                     if (entity.contains(String.format("\"password\":\"%s\"", hexP))) {
-                        MainWindow wnd = new MainWindow(authWindow.loginField.getText());
+                        ApplicationWindow wnd = new ApplicationWindow(authWindow.loginField.getText());
                         wnd.setVisible(true);
                         /*ChatPanel wnd = new ChatPanel(authWindow.loginField.getText());
                         wnd.setVisible(true);*/

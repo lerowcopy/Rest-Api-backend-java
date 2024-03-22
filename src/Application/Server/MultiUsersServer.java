@@ -1,4 +1,4 @@
-package Application.Main.Server;
+package Application.Server;
 
 import javax.management.remote.JMXServerErrorException;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package Application.Main;
+package Application.Main.AdditionClass;
 
 public class Wrap {
     public static void main(String[] args) {

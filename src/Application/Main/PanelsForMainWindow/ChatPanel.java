@@ -17,13 +17,11 @@ import javax.swing.*;
  * @author 79531
  */
 public class ChatPanel extends JPanel {
-    public static ChatPanel instance;
 
     public ChatPanel() throws IOException {
     }
 
     public ChatPanel(String username) throws IOException {
-        instance = this;
         ClientPart client = new ClientPart(username);
         setSize(785, 540);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,7 +107,6 @@ public class ChatPanel extends JPanel {
         public static int multiplyHeight = 0;
         public static JLabel messageL;
         static PrintWriter out;
-        ChatPanel wnd = ChatPanel.instance;
 
         public ClientPart(String username) throws IOException {
             this.username = username;
@@ -148,7 +145,6 @@ public class ChatPanel extends JPanel {
                         chatPanel.revalidate();
                         chatPanel.repaint();
                     }
-                    wnd.repaint();
                 }
             });
 

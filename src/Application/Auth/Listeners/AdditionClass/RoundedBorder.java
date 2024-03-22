@@ -1,14 +1,14 @@
-package Application.Auth;
+package Application.Auth.Listeners.AdditionClass;
 
 import javax.swing.border.Border;
 import java.awt.*;
 
-class RoundedBorder implements Border {
+public class RoundedBorder implements Border {
 
     private int radius;
 
 
-    RoundedBorder(int radius) {
+    public RoundedBorder(int radius) {
         this.radius = radius;
     }
 
