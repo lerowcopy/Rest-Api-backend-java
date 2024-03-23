@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import static RestfulApi.Database.Methods.DescriptionMethods.hex;
+import static API.Database.Methods.DescriptionMethods.hex;
 
 public class userLoginAction implements ActionListener {
     AuthWindow authWindow = AuthWindow.instance;

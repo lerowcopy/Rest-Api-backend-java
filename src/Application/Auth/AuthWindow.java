@@ -6,14 +6,11 @@ package Application.Auth;
 
 import Application.Auth.Listeners.*;
 import Application.Auth.Listeners.AdditionClass.RoundedBorder;
-import RestfulApi.Server.RestHttpServer;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
 import java.awt.*;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.border.*;
 

@@ -4,6 +4,8 @@
 
 package Application.Main.PanelsForMainWindow;
 
+import Application.Main.ApplicationWindow;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.*;
+
 
 /**
  * @author 79531
@@ -101,8 +104,6 @@ public class ChatPanel extends JPanel {
 
 
     public static class ClientPart {
-        private static final String SERVER_ADDRESS = "localhost";
-        private static final int SERVER_PORT = 8021;
         public final String username;
         public static int multiplyHeight = 0;
         public static JLabel messageL;
@@ -110,8 +111,7 @@ public class ChatPanel extends JPanel {
 
         public ClientPart(String username) throws IOException {
             this.username = username;
-            Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-            System.out.println("Connected to server at " + SERVER_ADDRESS + ":" + SERVER_PORT);
+            Socket socket = ApplicationWindow.socket;
 
             Scanner in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);

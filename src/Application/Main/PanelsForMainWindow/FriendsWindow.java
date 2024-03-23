@@ -5,16 +5,11 @@
 package Application.Main.PanelsForMainWindow;
 
 import Application.Main.ApplicationWindow;
-import RestfulApi.Database.Database;
+import API.Database.Database;
 
 import java.awt.*;
-import java.util.*;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  * @author 79531

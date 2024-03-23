@@ -1,15 +1,15 @@
-package RestfulApi.Server;
+package API.Server;
 
-import RestfulApi.Controlers.AuthController.RegisterController;
-import RestfulApi.Controlers.ControllerRequests;
-import RestfulApi.Controlers.AuthController.LoginController;
+import API.Controlers.AuthController.RegisterController;
+import API.Controlers.ControllerRequests;
+import API.Controlers.AuthController.LoginController;
+import API.Controlers.FriendsController.FriendsController;
 import com.sun.net.httpserver.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 
 public class RestHttpServer {
     protected static final int port = 8000;
@@ -19,6 +19,7 @@ public class RestHttpServer {
         server.createContext("/api", new ControllerRequests());
         server.createContext("/auth/login", new LoginController());
         server.createContext("/auth/register", new RegisterController());
+        server.createContext("/friendsRequest", new FriendsController());
 
         server.setExecutor(null);
         server.start();

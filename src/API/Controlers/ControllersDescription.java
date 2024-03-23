@@ -1,10 +1,10 @@
-package RestfulApi.Controlers;
+package API.Controlers;
 
-import RestfulApi.Controlers.Interface.ControllersInterface;
-import RestfulApi.Database.Database;
-import RestfulApi.Database.Response.Response;
-import RestfulApi.Database.Response.User;
-import RestfulApi.Server.RestHttpServer;
+import API.Controlers.Interface.ControllersInterface;
+import API.Database.Database;
+import API.Database.Response.Response;
+import API.Database.Response.User;
+import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;

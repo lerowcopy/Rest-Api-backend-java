@@ -1,6 +1,6 @@
-package RestfulApi.Database;
+package API.Database;
 
-import RestfulApi.Database.Methods.DescriptionMethods;
+import API.Database.Methods.DescriptionMethods;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +17,7 @@ public class Database extends DescriptionMethods {
         }
     }
 
-    private final void setUpDatabase () throws SQLException {
+    private void setUpDatabase () throws SQLException {
         String sql = """
                 create table if not exists user (
                     id integer primary key,

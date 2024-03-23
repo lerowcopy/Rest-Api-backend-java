@@ -1,7 +1,6 @@
-package RestfulApi.Database.Response;
+package API.Database.Response;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 public class User {

@@ -1,4 +1,4 @@
-package RestfulApi.Database.Response;
+package API.Database.Response;
 
 import java.util.List;
 

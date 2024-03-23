@@ -1,8 +1,9 @@
-package RestfulApi.Controlers.AuthController;
+package API.Controlers.AuthController;
 
-import RestfulApi.Database.Database;
-import RestfulApi.Database.Response.User;
-import RestfulApi.Server.RestHttpServer;
+import API.Database.Database;
+import API.Database.Response.Response;
+import API.Database.Response.User;
+import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
@@ -16,14 +17,14 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static RestfulApi.Controlers.ControllersDescription.queryToMap;
+import static API.Controlers.ControllersDescription.queryToMap;
 
-public class LoginController implements HttpHandler {
+public class RegisterController implements HttpHandler {
     Database database = new Database();
     GsonBuilder gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
 
-    public LoginController() throws SQLException {
+    public RegisterController() throws SQLException {
     }
 
     @Override
@@ -34,18 +35,21 @@ public class LoginController implements HttpHandler {
         }
 
         String body = readRequestBody(exchange);
+        if (body.equals("BR")){
+            RestHttpServer.sendResponse(exchange, 400, gson.toJson(new Response()));
+        }else{
+            String query = gson.fromJson(body, User.class).toString();
 
-        String query = gson.fromJson(body, User.class).toString();
+            Map<String, String> param = queryToMap(query);
 
-        Map<String, String> param = queryToMap(query);
-
-        String response = null;
-        try {
-            response = database.POST(Database.con, param, "login");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            String response = null;
+            try {
+                response = database.POST(Database.con, param, "register");
+                RestHttpServer.sendResponse(exchange, 201, response);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-        RestHttpServer.sendResponse(exchange, 201, response);
     }
 
     private String readRequestBody(HttpExchange exchange) throws IOException {
@@ -54,6 +58,9 @@ public class LoginController implements HttpHandler {
         StringBuilder requestBody = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
+            if (!line.contains("login:") && !line.contains("email:") && !line.contains("password:") && !line.contains("firstName:") && !line.contains("secondName:") && !line.contains("{") && !line.contains("}")) {
+                return "BR";
+            }
             requestBody.append(line);
         }
         reader.close();

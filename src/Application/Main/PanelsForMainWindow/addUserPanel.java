@@ -4,16 +4,48 @@
 
 package Application.Main.PanelsForMainWindow;
 
+import Application.Main.ApplicationWindow;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+
 import java.awt.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import javax.swing.*;
 
 /**
  * @author 79531
  */
 public class addUserPanel extends JPanel {
-    public addUserPanel(String login) {
+    int currentIndex;
+    CloseableHttpClient client;
+    public addUserPanel(String login, int index) throws SQLException {
+        currentIndex = index;
+        client = HttpClients.createDefault();
         initComponents();
         userLogin.setText(login);
+
+        addBtn.addActionListener(e -> {
+
+            HttpPost post = new HttpPost("http://localhost:8000/friendsRequest");
+
+            String request = String.format("{loginU:\"%s\", friendLogin:\"%s\"}", ApplicationWindow.name, userLogin.getText());
+            try {
+                StringEntity entity = new StringEntity(request);
+                post.setEntity(entity);
+            } catch (UnsupportedEncodingException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                client.execute(post);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            addBtn.setText("cancel");
+        });
     }
 
     private void initComponents() {

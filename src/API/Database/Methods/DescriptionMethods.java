@@ -1,7 +1,7 @@
-package RestfulApi.Database.Methods;
+package API.Database.Methods;
 
-import RestfulApi.Database.Database;
-import RestfulApi.Database.Methods.Interface.MethodsInterface;
+import API.Database.Database;
+import API.Database.Methods.Interface.MethodsInterface;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -12,8 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import RestfulApi.Database.Response.Response;
-import RestfulApi.Database.Response.User;
+import API.Database.Response.Response;
+import API.Database.Response.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -71,6 +71,12 @@ public class DescriptionMethods implements MethodsInterface {
             users.add(resultSet.getString("login"));
         }
         return users;
+    }
+
+    @Override
+    public void POSTFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
+        StringBuilder sql = PostFriendRequest(queryParams);
+        execute(con, sql.toString());
     }
 
     @Override
@@ -252,6 +258,22 @@ public class DescriptionMethods implements MethodsInterface {
         return sql;
     }
 
+    private StringBuilder PostFriendRequest(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("INSERT INTO friends_request (loginU, friendLogin) VALUES (");
+        boolean flag = false;
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                sql.append(String.format(", '%s'", entry.getValue()));
+            } else {
+                sql.append(String.format("'%s'", entry.getValue()));
+            }
+
+            flag = true;
+        }
+        sql.append(")");
+        return sql;
+    }
     private StringBuilder PostRequest(Map<String, String> queryParams) {
         StringBuilder sql = new StringBuilder("INSERT INTO user (");
         boolean flag = true;

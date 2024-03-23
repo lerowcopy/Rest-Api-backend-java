@@ -7,20 +7,36 @@ package Application.Main;
 import java.awt.*;
 import javax.swing.*;
 import Application.Main.PanelsForMainWindow.*;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.sql.SQLException;
 
 /**
  * @author 79531
  */
 public class ApplicationWindow extends JFrame {
-    public static ApplicationWindow instance;
+    private static final String SERVER_ADDRESS = "localhost";
+    private static final int SERVER_PORT = 8021;
+    public static PrintWriter out;
+    public static Socket socket;
     public static String name;
+    public static CloseableHttpClient httpClient;
+    public static final FriendsWindow friendsWindow;
+    public static ApplicationWindow instance;
     public ApplicationWindow() throws IOException {}
     public ApplicationWindow(String username) throws IOException {
         instance = this;
         name = username;
+        socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+        httpClient = HttpClients.createDefault();
+        System.out.println("Connected to server at " + socket.getInetAddress() + ":" + socket.getPort());
+
+        out = new PrintWriter(socket.getOutputStream(), true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -63,12 +79,13 @@ public class ApplicationWindow extends JFrame {
         {
             forBtnPanel.setPreferredSize(new Dimension(0, 2222));
             forBtnPanel.setMinimumSize(new Dimension(0, 2222));
-            forBtnPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border.
-            EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing
-            . border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ),
-            java. awt. Color. red) ,forBtnPanel. getBorder( )) ); forBtnPanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( )
-            { @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () ))
-            throw new RuntimeException( ); }} );
+            forBtnPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
+            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing
+            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
+            Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
+            ) ,forBtnPanel. getBorder () ) ); forBtnPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
+            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName (
+            ) ) )throw new RuntimeException( ) ;} } );
             forBtnPanel.setLayout(new BoxLayout(forBtnPanel, BoxLayout.Y_AXIS));
 
             //---- friendsBtn ----
@@ -89,9 +106,6 @@ public class ApplicationWindow extends JFrame {
     public static JPanel forBtnPanel;
     public static JButton friendsBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
-    public static final FriendsWindow friendsWindow;
-
     static {
         try {
             friendsWindow = new FriendsWindow();
