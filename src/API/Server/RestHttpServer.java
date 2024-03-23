@@ -1,9 +1,9 @@
 package API.Server;
 
 import API.Controlers.AuthController.RegisterController;
-import API.Controlers.ControllerRequests;
+import API.Controlers.ApiController.ControllerRequests;
 import API.Controlers.AuthController.LoginController;
-import API.Controlers.FriendsController.FriendsController;
+import API.Controlers.FriendsController.FriendsControllerRequests;
 import com.sun.net.httpserver.*;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class RestHttpServer {
         server.createContext("/api", new ControllerRequests());
         server.createContext("/auth/login", new LoginController());
         server.createContext("/auth/register", new RegisterController());
-        server.createContext("/friendsRequest", new FriendsController());
+        server.createContext("/friendsRequest", new FriendsControllerRequests());
 
         server.setExecutor(null);
         server.start();

@@ -1,6 +1,6 @@
-package API.Controlers;
+package API.Controlers.ApiController;
 
-import API.Controlers.Interface.ControllersInterface;
+import API.Controlers.ApiController.Interface.ApiControllersInterface;
 import API.Database.Database;
 import API.Database.Response.Response;
 import API.Database.Response.User;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ControllersDescription implements ControllersInterface {
+public class ControllersDescription implements ApiControllersInterface {
 
 
     @Override

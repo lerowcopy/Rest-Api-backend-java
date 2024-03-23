@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Fri Mar 22 15:28:40 MSK 2024
  */
 
-package Application.Main.PanelsForMainWindow;
+package Application.Main.PanelsForMainWindow.FriendsPanel;
 
 import Application.Main.ApplicationWindow;
 import API.Database.Database;

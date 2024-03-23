@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static API.Controlers.ControllersDescription.queryToMap;
+import static API.Controlers.ApiController.ControllersDescription.queryToMap;
 
 public class LoginController implements HttpHandler {
     Database database = new Database();

@@ -2,12 +2,17 @@
  * Created by JFormDesigner on Fri Mar 22 22:15:39 MSK 2024
  */
 
-package Application.Main.PanelsForMainWindow;
+package Application.Main.PanelsForMainWindow.FriendsPanel;
 
 import Application.Main.ApplicationWindow;
 import API.Database.Database;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 import java.awt.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.*;
@@ -50,8 +55,13 @@ public class SearchFriends extends JPanel {
                         List<String> users = db.GETUsers(Database.con, query);
                         for (String user : users) {
                             if (!user.equals(ApplicationWindow.name)){
-                                //сделать отправку запроса на сервер, если такая строка есть, то у addUserPanel изменить текст кнопки на cancel, иначне не трогать
-                                JPanel userPanel = new addUserPanel(user, index++);
+                                CloseableHttpClient client = HttpClients.createDefault();
+                                HttpGet request = new HttpGet(String.format("http://localhost:8000/friendsRequest?loginU=%s&friendLogin=%s", ApplicationWindow.name, user));
+                                String response = client.execute(request).toString();
+                                addUserPanel userPanel = new addUserPanel(user, index++);
+                                if (response.contains("OK")) {
+                                    userPanel.addBtn.setText("cancel");
+                                }
                                 userPanel.setMaximumSize(new Dimension((int) usersPanel.getSize().getWidth(), 80));
                                 userPanel.setMinimumSize(new Dimension((int) usersPanel.getSize().getWidth(), 80));
                                 usersPanel.add(userPanel);
@@ -60,6 +70,10 @@ public class SearchFriends extends JPanel {
                             }
                         }
                     } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ClientProtocolException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }

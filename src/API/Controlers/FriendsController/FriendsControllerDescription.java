@@ -1,12 +1,12 @@
 package API.Controlers.FriendsController;
 
+import API.Controlers.FriendsController.Interface.FriendsControllerInterface;
 import API.Database.Database;
 import API.Database.Response.FriendRequest;
 import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,20 +17,17 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FriendsController implements HttpHandler {
+public class FriendsControllerDescription implements FriendsControllerInterface {
+
     GsonBuilder gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
     Database database = new Database();
 
-    public FriendsController() throws SQLException {
+    public FriendsControllerDescription() throws SQLException {
     }
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        if (!exchange.getRequestMethod().equals("POST")) {
-            RestHttpServer.sendResponse(exchange, 400, "Bad Request");
-            return;
-        }
+    public void POSTController(HttpExchange exchange) throws IOException {
         String requestBody = readRequestBody(exchange);
 
         String query = gson.fromJson(requestBody, FriendRequest.class).toString();
@@ -43,7 +40,34 @@ public class FriendsController implements HttpHandler {
             throw new RuntimeException(e);
         }
         RestHttpServer.sendResponse(exchange, 201, "Created");
+    }
 
+    @Override
+    public void GETController(HttpExchange exchange) throws IOException {
+        String query = exchange.getRequestURI().getRawQuery();
+
+        Map<String, String> param = queryToMap(query);
+
+        try {
+            database.GETFriendRequest(Database.con, param);
+        } catch (SQLException e) {
+            RestHttpServer.sendResponse(exchange, 400, "Bad Request");
+        }
+        RestHttpServer.sendResponse(exchange, 200, "OK");
+    }
+
+    @Override
+    public void DELETEController(HttpExchange exchange) throws IOException {
+        String query = exchange.getRequestURI().getRawQuery();
+
+        Map<String, String> param = queryToMap(query);
+
+        try {
+            database.DELETEFriendRequest(Database.con, param);
+        } catch (SQLException e) {
+            RestHttpServer.sendResponse(exchange, 400, "Bad Request");
+        }
+        RestHttpServer.sendResponse(exchange, 200, "OK");
     }
 
     private String readRequestBody(HttpExchange exchange) throws IOException {

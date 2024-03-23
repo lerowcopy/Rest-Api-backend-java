@@ -2,9 +2,10 @@
  * Created by JFormDesigner on Fri Mar 22 19:33:43 MSK 2024
  */
 
-package Application.Main.PanelsForMainWindow;
+package Application.Main.PanelsForMainWindow.FriendsPanel;
 
 import Application.Main.ApplicationWindow;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,22 +30,32 @@ public class addUserPanel extends JPanel {
         userLogin.setText(login);
 
         addBtn.addActionListener(e -> {
+            if (addBtn.getText().equals("add")) {
+                HttpPost post = new HttpPost("http://localhost:8000/friendsRequest");
 
-            HttpPost post = new HttpPost("http://localhost:8000/friendsRequest");
-
-            String request = String.format("{loginU:\"%s\", friendLogin:\"%s\"}", ApplicationWindow.name, userLogin.getText());
-            try {
-                StringEntity entity = new StringEntity(request);
-                post.setEntity(entity);
-            } catch (UnsupportedEncodingException ex) {
-                throw new RuntimeException(ex);
+                String request = String.format("{loginU:\"%s\", friendLogin:\"%s\"}", ApplicationWindow.name, userLogin.getText());
+                try {
+                    StringEntity entity = new StringEntity(request);
+                    post.setEntity(entity);
+                } catch (UnsupportedEncodingException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    client.execute(post);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                addBtn.setText("cancel");
             }
-            try {
-                client.execute(post);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            else {
+                HttpDelete delete = new HttpDelete(String.format("http://localhost:8000/friendsRequest?loginU=%s&friendLogin=%s", ApplicationWindow.name, userLogin.getText()));
+                try {
+                    client.execute(delete);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                addBtn.setText("add");
             }
-            addBtn.setText("cancel");
         });
     }
 
@@ -105,6 +116,6 @@ public class addUserPanel extends JPanel {
     // Generated using JFormDesigner Evaluation license - Misha
     private JLabel userIcon;
     private JLabel userLogin;
-    private JButton addBtn;
+    public JButton addBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

@@ -80,6 +80,25 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
+    public void GETFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
+        StringBuilder sql = GetFriendRequest(queryParams);
+        PreparedStatement ps = con.prepareStatement(sql.toString());
+        ResultSet resultSet = ps.executeQuery();
+
+        if (resultSet.next()){
+            return;
+        }else{
+            throw new SQLException();
+        }
+    }
+
+    @Override
+    public void DELETEFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
+        String sql = DeleteFriendRequest(queryParams).toString();
+        execute(con, sql);
+    }
+
+    @Override
     public String POST(Connection con, Map<String, String> queryParams, String path) throws SQLException {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -272,6 +291,37 @@ public class DescriptionMethods implements MethodsInterface {
             flag = true;
         }
         sql.append(")");
+        return sql;
+    }
+
+    private StringBuilder DeleteFriendRequest(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("DELETE FROM friends_request WHERE ");
+        boolean flag = false;
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
+            } else {
+                sql.append(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
+            }
+
+            flag = true;
+        }
+        return sql;
+    }
+    private StringBuilder GetFriendRequest(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM friends_request WHERE ");
+        boolean flag = false;
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
+            } else {
+                sql.append(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
+            }
+
+            flag = true;
+        }
         return sql;
     }
     private StringBuilder PostRequest(Map<String, String> queryParams) {
