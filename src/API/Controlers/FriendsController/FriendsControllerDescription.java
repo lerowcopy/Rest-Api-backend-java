@@ -2,7 +2,8 @@ package API.Controlers.FriendsController;
 
 import API.Controlers.FriendsController.Interface.FriendsControllerInterface;
 import API.Database.Database;
-import API.Database.Response.FriendRequest;
+import API.Database.Response.ResponseClass.FriendRequest;
+import API.Database.Response.TypeResponse.FriendRequestResponse;
 import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,13 +48,13 @@ public class FriendsControllerDescription implements FriendsControllerInterface 
         String query = exchange.getRequestURI().getRawQuery();
 
         Map<String, String> param = queryToMap(query);
-
+        FriendRequestResponse response = new FriendRequestResponse();
         try {
-            database.GETFriendRequest(Database.con, param);
+            response = database.GETFriendRequest(Database.con, param);
         } catch (SQLException e) {
             RestHttpServer.sendResponse(exchange, 400, "Bad Request");
         }
-        RestHttpServer.sendResponse(exchange, 200, "OK");
+        RestHttpServer.sendResponse(exchange, 200, gson.toJson(response));
     }
 
     @Override

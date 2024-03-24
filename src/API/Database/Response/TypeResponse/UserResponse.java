@@ -1,20 +1,22 @@
-package API.Database.Response;
+package API.Database.Response.TypeResponse;
+
+import API.Database.Response.ResponseClass.User;
 
 import java.util.List;
 
-public class Response {
+public class UserResponse {
 
     List<User> data;
     String message;
     String status;
 
-    public Response(List<User> data, String message, String status) {
+    public UserResponse(List<User> data, String message, String status) {
         this.data = data;
         this.message = message;
         this.status = status;
     }
 
-    public Response(){
+    public UserResponse(){
         this.data = null;
         this.message = "Incorrect parameter";
         this.status = "failed";

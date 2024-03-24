@@ -12,8 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import API.Database.Response.Response;
-import API.Database.Response.User;
+import API.Database.Response.ResponseClass.FriendRequest;
+import API.Database.Response.TypeResponse.FriendRequestResponse;
+import API.Database.Response.TypeResponse.UserResponse;
+import API.Database.Response.ResponseClass.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,7 +39,7 @@ public class DescriptionMethods implements MethodsInterface {
             Gson gson = gsonBuilder.create();
 
             List<User> users = new ArrayList<>();
-            Response response;
+            UserResponse response;
 
             if (resultSet.isClosed()) {
                 return "BR";
@@ -53,7 +55,7 @@ public class DescriptionMethods implements MethodsInterface {
 
                     users.add(user);
                 }
-                response = new Response(users, "ok", "success");
+                response = new UserResponse(users, "ok", "success");
             }
             return gson.toJson(response);
         } catch (SQLException e) {
@@ -80,16 +82,24 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
-    public void GETFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
+    public FriendRequestResponse GETFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
         StringBuilder sql = GetFriendRequest(queryParams);
         PreparedStatement ps = con.prepareStatement(sql.toString());
         ResultSet resultSet = ps.executeQuery();
 
-        if (resultSet.next()){
-            return;
-        }else{
-            throw new SQLException();
+        List<FriendRequest> requests = new ArrayList<>();
+
+        if (!resultSet.isClosed()){
+            while (resultSet.next()){
+                String id = resultSet.getString("id");
+                String loginU = resultSet.getString("loginU");
+                String friendLogin = resultSet.getString("friendLogin");
+
+                requests.add(new FriendRequest(id, loginU, friendLogin));
+            }
+            return new FriendRequestResponse(requests, "ok", "success");
         }
+        throw new SQLException("BR");
     }
 
     @Override
@@ -104,7 +114,7 @@ public class DescriptionMethods implements MethodsInterface {
         Gson gson = gsonBuilder.create();
 
         List<User> users = new ArrayList<>();
-        Response response;
+        UserResponse response;
 
         StringBuilder sql = PostRequest(queryParams);
         PreparedStatement ps = con.prepareStatement(sql.toString());
@@ -140,7 +150,7 @@ public class DescriptionMethods implements MethodsInterface {
 
                 users.add(user);
             }
-            response = new Response(users, "ok", "success");
+            response = new UserResponse(users, "ok", "success");
         }
         return gson.toJson(response);
     }
@@ -149,7 +159,7 @@ public class DescriptionMethods implements MethodsInterface {
     public String PUT(Connection con, int id, Map<String, String> queryParams) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        Response response;
+        UserResponse response;
 
         StringBuilder sql;
         sql = PutRequest(id, queryParams);
@@ -165,7 +175,7 @@ public class DescriptionMethods implements MethodsInterface {
             return "BR";
         }
 
-        response = new Response(new ArrayList<>(), "User updated", "success");
+        response = new UserResponse(new ArrayList<User>(), "User updated", "success");
         return gson.toJson(response);
     }
 
@@ -173,7 +183,7 @@ public class DescriptionMethods implements MethodsInterface {
     public String PATCH(Connection con, int id, Map<String, String> queryParams) throws SQLException {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        Response response;
+        UserResponse response;
         List<User> users = new ArrayList<>();
 
         StringBuilder sql;
@@ -205,7 +215,7 @@ public class DescriptionMethods implements MethodsInterface {
 
                 users.add(user);
             }
-            response = new Response(users, "ok", "success");
+            response = new UserResponse(users, "ok", "success");
         }
         return gson.toJson(response);
     }
@@ -214,7 +224,7 @@ public class DescriptionMethods implements MethodsInterface {
     public String DELETE(Connection con, int id) throws SQLException {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        Response response;
+        UserResponse response;
 
         String sql = String.format("SELECT * FROM user WHERE id = %d", id);
 
@@ -228,7 +238,7 @@ public class DescriptionMethods implements MethodsInterface {
         sql = String.format("DELETE FROM user WHERE id = %d", id);
         execute(con, sql);
 
-        response = new Response(new ArrayList<>(), "User deleted", "success");
+        response = new UserResponse(new ArrayList<User>(), "User deleted", "success");
         return gson.toJson(response);
     }
 

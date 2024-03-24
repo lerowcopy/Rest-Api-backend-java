@@ -30,8 +30,8 @@ public class ApplicationWindow extends JFrame {
     public static ApplicationWindow instance;
     public ApplicationWindow() throws IOException {}
     public ApplicationWindow(String username) throws IOException {
-        instance = this;
         name = username;
+        instance = this;
         socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
         httpClient = HttpClients.createDefault();
         System.out.println("Connected to server at " + socket.getInetAddress() + ":" + socket.getPort());
@@ -109,7 +109,7 @@ public class ApplicationWindow extends JFrame {
     static {
         try {
             friendsWindow = new FriendsWindow();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }

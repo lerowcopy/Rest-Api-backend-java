@@ -15,6 +15,9 @@ new FormModel {
 				"preferredSize": new java.awt.Dimension( 350, 30 )
 				"minimumSize": new java.awt.Dimension( 370, 35 )
 				"border": new javax.swing.border.MatteBorder( 0, 0, 1, 0, sfield java.awt.Color black )
+				auxiliary() {
+					"JavaCodeGenerator.variableModifiers": 9
+				}
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"insets": new java.awt.Insets( 5, 10, 5, 10 )
 				"hAlign": 5

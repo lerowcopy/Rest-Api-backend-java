@@ -1,0 +1,49 @@
+JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+			"$columnSpecs": "73, 0:1.0, 0, 0"
+			"$rowSpecs": "0:1.0"
+			"$alignTop": true
+			"$alignLeft": true
+		} ) {
+			name: "this"
+			"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "iconL"
+				"text": "icon"
+				"horizontalTextPosition": 0
+				"horizontalAlignment": 0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "loginL"
+				"text": "login"
+				"font": new java.awt.Font( "Manrope ExtraBold", 0, 16 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 1
+				"insets": new java.awt.Insets( 0, 0, 25, 0 )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "declineBtn"
+				"text": "Decline"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 2
+				"insets": new java.awt.Insets( 15, 0, 15, 10 )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "acceptBtn"
+				"text": "Accept"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 3
+				"insets": new java.awt.Insets( 15, 0, 15, 0 )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 55 )
+		} )
+	}
+}

@@ -1,8 +1,8 @@
 package API.Controlers.AuthController;
 
 import API.Database.Database;
-import API.Database.Response.Response;
-import API.Database.Response.User;
+import API.Database.Response.TypeResponse.UserResponse;
+import API.Database.Response.ResponseClass.User;
 import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,7 +36,7 @@ public class RegisterController implements HttpHandler {
 
         String body = readRequestBody(exchange);
         if (body.equals("BR")){
-            RestHttpServer.sendResponse(exchange, 400, gson.toJson(new Response()));
+            RestHttpServer.sendResponse(exchange, 400, gson.toJson(new UserResponse()));
         }else{
             String query = gson.fromJson(body, User.class).toString();
 

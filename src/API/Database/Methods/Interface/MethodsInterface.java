@@ -1,5 +1,7 @@
 package API.Database.Methods.Interface;
 
+import API.Database.Response.TypeResponse.FriendRequestResponse;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,7 +12,7 @@ public interface MethodsInterface {
     String GET (Connection con, Map<String, String> queryParams);
     List<String> GETUsers (Connection con, String name) throws SQLException;
     void POSTFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
-    void GETFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
+    FriendRequestResponse GETFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
     void DELETEFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
     String POST(Connection con, Map<String, String> queryParams, String path)throws SQLException;
     String PUT(Connection con, int id, Map<String, String> queryParams)throws SQLException;

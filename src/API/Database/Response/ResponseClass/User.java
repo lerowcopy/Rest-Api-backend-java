@@ -1,4 +1,4 @@
-package API.Database.Response;
+package API.Database.Response.ResponseClass;
 
 import lombok.Data;
 

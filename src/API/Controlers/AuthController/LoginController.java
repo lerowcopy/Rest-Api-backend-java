@@ -1,7 +1,7 @@
 package API.Controlers.AuthController;
 
 import API.Database.Database;
-import API.Database.Response.User;
+import API.Database.Response.ResponseClass.User;
 import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Fri Mar 22 19:33:43 MSK 2024
  */
 
-package Application.Main.PanelsForMainWindow.FriendsPanel;
+package Application.Main.PanelsForMainWindow.FriendsPanel.Find;
 
 import Application.Main.ApplicationWindow;
 import org.apache.http.client.methods.HttpDelete;
@@ -45,6 +45,7 @@ public class addUserPanel extends JPanel {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                SearchFriends.searchField.setText("");
                 addBtn.setText("cancel");
             }
             else {

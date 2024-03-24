@@ -2,8 +2,8 @@ package API.Controlers.ApiController;
 
 import API.Controlers.ApiController.Interface.ApiControllersInterface;
 import API.Database.Database;
-import API.Database.Response.Response;
-import API.Database.Response.User;
+import API.Database.Response.TypeResponse.UserResponse;
+import API.Database.Response.ResponseClass.User;
 import API.Server.RestHttpServer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,7 +40,7 @@ public class ControllersDescription implements ApiControllersInterface {
             String response = database.GET(Database.con, params);
 
             if (response.equals("BR")) {
-                RestHttpServer.sendResponse(exchange, 400, gson.toJson(new Response()));
+                RestHttpServer.sendResponse(exchange, 400, gson.toJson(new UserResponse()));
             } else {
                 RestHttpServer.sendResponse(exchange, 200, response);
             }
@@ -57,7 +57,7 @@ public class ControllersDescription implements ApiControllersInterface {
         String body = readRequestBody(exchange);
 
         if (body.equals("BR")){
-            RestHttpServer.sendResponse(exchange, 400, gson.toJson(new Response()));
+            RestHttpServer.sendResponse(exchange, 400, gson.toJson(new UserResponse()));
         }else{
             String query = gson.fromJson(body, User.class).toString();
 
@@ -79,7 +79,7 @@ public class ControllersDescription implements ApiControllersInterface {
         String requestBody = readRequestBody(Exchange);
 
         if (requestBody.equals("BR")){
-            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new UserResponse()));
         }else{
             String query = gson.fromJson(requestBody, User.class).toString();
 
@@ -88,7 +88,7 @@ public class ControllersDescription implements ApiControllersInterface {
             String response = database.PUT(Database.con, id, param);
 
             if (response.equals("BR")){
-                RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+                RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new UserResponse()));
             }else{
                 RestHttpServer.sendResponse(Exchange, 204, response);
             }
@@ -106,7 +106,7 @@ public class ControllersDescription implements ApiControllersInterface {
         String requestBody = readRequestBody(Exchange);
 
         if (requestBody.equals("BR")){
-            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new UserResponse()));
         }else{
             String query = gson.fromJson(requestBody, User.class).toString();
 
@@ -115,7 +115,7 @@ public class ControllersDescription implements ApiControllersInterface {
             String response = database.PATCH(Database.con, id, param);
 
             if (response.equals("BR")){
-                RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response()));
+                RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new UserResponse()));
             }else{
                 RestHttpServer.sendResponse(Exchange, 200, response);
             }
@@ -133,7 +133,7 @@ public class ControllersDescription implements ApiControllersInterface {
         String response = database.DELETE(Database.con, id);
 
         if (response.equals("BR")) {
-            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new Response(new ArrayList<>(), "incorrect id", "failed")));
+            RestHttpServer.sendResponse(Exchange, 400, gson.toJson(new UserResponse(new ArrayList<User>(), "incorrect id", "failed")));
         }else{
             RestHttpServer.sendResponse(Exchange, 200, response);
         }

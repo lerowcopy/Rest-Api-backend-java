@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Fri Mar 22 22:15:39 MSK 2024
  */
 
-package Application.Main.PanelsForMainWindow.FriendsPanel;
+package Application.Main.PanelsForMainWindow.FriendsPanel.Find;
 
 import Application.Main.ApplicationWindow;
 import API.Database.Database;
@@ -69,11 +69,7 @@ public class SearchFriends extends JPanel {
                                 usersPanel.revalidate();
                             }
                         }
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (ClientProtocolException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
+                    } catch (SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
@@ -90,11 +86,12 @@ public class SearchFriends extends JPanel {
         usersPanel = new JPanel();
 
         //======== this ========
-        setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder ( 0
-        , 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM
-        , new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,
-         getBorder () ) );  addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
-        ) { if( "bord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
+        EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing
+        .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
+        java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener()
+        {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))
+        throw new RuntimeException();}});
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {41, 0, 0};
@@ -137,7 +134,7 @@ public class SearchFriends extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     // Generated using JFormDesigner Evaluation license - Misha
-    private JTextField searchField;
+    public static JTextField searchField;
     private JButton searchBtn;
     private JScrollPane scrollPane;
     private JPanel usersPanel;
