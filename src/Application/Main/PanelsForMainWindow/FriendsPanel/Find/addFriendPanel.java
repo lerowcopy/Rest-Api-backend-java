@@ -20,10 +20,10 @@ import javax.swing.*;
 /**
  * @author 79531
  */
-public class addUserPanel extends JPanel {
+public class addFriendPanel extends JPanel {
     int currentIndex;
     CloseableHttpClient client;
-    public addUserPanel(String login, int index) throws SQLException {
+    public addFriendPanel(String login, int index) throws SQLException {
         currentIndex = index;
         client = HttpClients.createDefault();
         initComponents();

@@ -6,7 +6,6 @@ package Application.Main.PanelsForMainWindow.FriendsPanel.Find;
 
 import Application.Main.ApplicationWindow;
 import API.Database.Database;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -58,7 +57,7 @@ public class SearchFriends extends JPanel {
                                 CloseableHttpClient client = HttpClients.createDefault();
                                 HttpGet request = new HttpGet(String.format("http://localhost:8000/friendsRequest?loginU=%s&friendLogin=%s", ApplicationWindow.name, user));
                                 String response = client.execute(request).toString();
-                                addUserPanel userPanel = new addUserPanel(user, index++);
+                                addFriendPanel userPanel = new addFriendPanel(user, index++);
                                 if (response.contains("OK")) {
                                     userPanel.addBtn.setText("cancel");
                                 }
