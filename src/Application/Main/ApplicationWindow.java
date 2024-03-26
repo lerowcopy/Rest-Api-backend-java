@@ -63,7 +63,7 @@ public class ApplicationWindow extends JFrame {
 
     private void initComponents() throws IOException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        // Generated using JFormDesigner Evaluation license - Misha
+        // Generated using JFormDesigner Evaluation license - Misha Belyakov
         forBtnPanel = new JPanel();
         friendsBtn = new JButton();
 
@@ -79,18 +79,22 @@ public class ApplicationWindow extends JFrame {
         {
             forBtnPanel.setPreferredSize(new Dimension(0, 2222));
             forBtnPanel.setMinimumSize(new Dimension(0, 2222));
-            forBtnPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
-            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing
-            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
-            Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
-            ) ,forBtnPanel. getBorder () ) ); forBtnPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
-            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName (
-            ) ) )throw new RuntimeException( ) ;} } );
+            forBtnPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder (
+            new javax . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn"
+            , javax. swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM
+            , new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 )
+            ,java . awt. Color .red ) ,forBtnPanel. getBorder () ) ); forBtnPanel. addPropertyChangeListener(
+            new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+            ) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
+            ;} } );
             forBtnPanel.setLayout(new BoxLayout(forBtnPanel, BoxLayout.Y_AXIS));
 
             //---- friendsBtn ----
-            friendsBtn.setText("text");
             friendsBtn.setMaximumSize(new Dimension(60, 50));
+            friendsBtn.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/friends.png")));
+            friendsBtn.setBorder(null);
+            friendsBtn.setContentAreaFilled(false);
+            friendsBtn.setFocusPainted(false);
             forBtnPanel.add(friendsBtn);
         }
         contentPane.add(forBtnPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -102,7 +106,7 @@ public class ApplicationWindow extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    // Generated using JFormDesigner Evaluation license - Misha
+    // Generated using JFormDesigner Evaluation license - Misha Belyakov
     public static JPanel forBtnPanel;
     public static JButton friendsBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

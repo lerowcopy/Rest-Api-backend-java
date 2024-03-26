@@ -25,6 +25,9 @@ import javax.swing.event.DocumentListener;
 public class SearchFriends extends JPanel {
     public SearchFriends() throws SQLException {
         initComponents();
+        searchBtn.addActionListener(e -> {
+            Search();
+        });
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -40,41 +43,46 @@ public class SearchFriends extends JPanel {
             public void changedUpdate(DocumentEvent e) {
                 searchUsers(e);
             }
-            private void searchUsers (DocumentEvent e) {
-                usersPanel.removeAll();
-                usersPanel.repaint();
 
-                String query = searchField.getText();
-                if (query.isEmpty()) {
-                    usersPanel.removeAll();
-                    usersPanel.repaint();
-                }else{
-                    try {
-                        int index = 0;
-                        List<String> users = db.GETUsers(Database.con, query);
-                        List<String> friends = db.GETFriends(Database.con, ApplicationWindow.name);
-                        for (String user : users) {
-                            if (!user.equals(ApplicationWindow.name) && !friends.contains(user)) {
-                                CloseableHttpClient client = HttpClients.createDefault();
-                                HttpGet request = new HttpGet(String.format("http://localhost:8000/friendsRequest?loginU=%s&friendLogin=%s", ApplicationWindow.name, user));
-                                String response = client.execute(request).toString();
-                                addFriendPanel userPanel = new addFriendPanel(user, index++);
-                                if (response.contains("OK")) {
-                                    userPanel.addBtn.setText("cancel");
-                                }
-                                userPanel.setMaximumSize(new Dimension((int) usersPanel.getSize().getWidth(), 80));
-                                userPanel.setMinimumSize(new Dimension((int) usersPanel.getSize().getWidth(), 80));
-                                usersPanel.add(userPanel);
-                                usersPanel.repaint();
-                                usersPanel.revalidate();
-                            }
-                        }
-                    } catch (SQLException | IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
+            private void searchUsers(DocumentEvent e) {
+                Search();
             }
         });
+    }
+
+    private void Search() {
+        usersPanel.removeAll();
+        usersPanel.repaint();
+
+        String query = searchField.getText();
+        if (query.isEmpty()) {
+            usersPanel.removeAll();
+            usersPanel.repaint();
+        } else {
+            try {
+                int index = 0;
+                List<String> users = db.GETUsers(Database.con, query);
+                List<String> friends = db.GETFriends(Database.con, ApplicationWindow.name);
+                for (String user : users) {
+                    if (!user.equals(ApplicationWindow.name) && !friends.contains(user)) {
+                        CloseableHttpClient client = HttpClients.createDefault();
+                        HttpGet request = new HttpGet(String.format("http://localhost:8000/friendsRequest?loginU=%s&friendLogin=%s", ApplicationWindow.name, user));
+                        String response = client.execute(request).toString();
+                        addFriendPanel userPanel = new addFriendPanel(user, index++);
+                        if (response.contains("OK")) {
+                            userPanel.addBtn.setText("cancel");
+                        }
+                        userPanel.setMaximumSize(new Dimension((int) usersPanel.getSize().getWidth(), 80));
+                        userPanel.setMinimumSize(new Dimension((int) usersPanel.getSize().getWidth(), 80));
+                        usersPanel.add(userPanel);
+                        usersPanel.repaint();
+                        usersPanel.revalidate();
+                    }
+                }
+            } catch (SQLException | IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     private void initComponents() {
@@ -86,11 +94,12 @@ public class SearchFriends extends JPanel {
         usersPanel = new JPanel();
 
         //======== this ========
-        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
-        0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
-        . BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
-        red) , getBorder( )) );  addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
-        beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
+        (0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing.border
+        .TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt
+        .Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void
+        propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException()
+        ;}});
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {41, 0, 0};
@@ -106,10 +115,15 @@ public class SearchFriends extends JPanel {
             new Insets(5, 10, 5, 10), 0, 0));
 
         //---- searchBtn ----
-        searchBtn.setText("search");
         searchBtn.setBorder(null);
         searchBtn.setHorizontalAlignment(SwingConstants.LEFT);
         searchBtn.setForeground(Color.white);
+        searchBtn.setIcon(new ImageIcon(getClass().getResource("/Application/Auth/Icons/search.png")));
+        searchBtn.setMaximumSize(new Dimension(24, 24));
+        searchBtn.setMinimumSize(new Dimension(24, 24));
+        searchBtn.setPreferredSize(new Dimension(35, 35));
+        searchBtn.setContentAreaFilled(false);
+        searchBtn.setFocusPainted(false);
         add(searchBtn, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
             new Insets(5, 5, 5, 40), 0, 0));

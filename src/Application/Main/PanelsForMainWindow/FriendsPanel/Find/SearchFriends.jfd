@@ -24,10 +24,15 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "searchBtn"
-				"text": "search"
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"horizontalAlignment": 2
 				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/search.png" )
+				"maximumSize": new java.awt.Dimension( 24, 24 )
+				"minimumSize": new java.awt.Dimension( 24, 24 )
+				"preferredSize": new java.awt.Dimension( 35, 35 )
+				"contentAreaFilled": false
+				"focusPainted": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridx": 1
 				"insets": new java.awt.Insets( 5, 5, 5, 40 )

@@ -21,8 +21,11 @@ new FormModel {
 				}
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "friendsBtn"
-					"text": "text"
 					"maximumSize": new java.awt.Dimension( 60, 50 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/Application/Auth/Icons/friends.png" )
+					"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"contentAreaFilled": false
+					"focusPainted": false
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 9
 					}
