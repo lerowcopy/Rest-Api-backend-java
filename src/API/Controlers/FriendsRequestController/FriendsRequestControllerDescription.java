@@ -1,6 +1,6 @@
-package API.Controlers.FriendsController;
+package API.Controlers.FriendsRequestController;
 
-import API.Controlers.FriendsController.Interface.FriendsControllerInterface;
+import API.Controlers.FriendsRequestController.Interface.FriendsRequestControllerInterface;
 import API.Database.Database;
 import API.Database.Response.ResponseClass.FriendRequest;
 import API.Database.Response.TypeResponse.FriendRequestResponse;
@@ -18,13 +18,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FriendsControllerDescription implements FriendsControllerInterface {
+public class FriendsRequestControllerDescription implements FriendsRequestControllerInterface {
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
     Database database = new Database();
 
-    public FriendsControllerDescription() throws SQLException {
+    public FriendsRequestControllerDescription() throws SQLException {
     }
 
     @Override
@@ -36,7 +36,7 @@ public class FriendsControllerDescription implements FriendsControllerInterface 
         Map<String, String> param = queryToMap(query);
 
         try {
-            database.POSTFriend(Database.con, param);
+            database.POSTFriendRequest(Database.con, param);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -50,7 +50,7 @@ public class FriendsControllerDescription implements FriendsControllerInterface 
         Map<String, String> param = queryToMap(query);
         FriendRequestResponse response = new FriendRequestResponse();
         try {
-            response = database.GETFriend(Database.con, param);
+            response = database.GETFriendRequest(Database.con, param);
         } catch (SQLException e) {
             RestHttpServer.sendResponse(exchange, 400, "Bad Request");
         }
@@ -64,7 +64,7 @@ public class FriendsControllerDescription implements FriendsControllerInterface 
         Map<String, String> param = queryToMap(query);
 
         try {
-            database.DELETEFriend(Database.con, param);
+            database.DELETEFriendRequest(Database.con, param);
         } catch (SQLException e) {
             RestHttpServer.sendResponse(exchange, 400, "Bad Request");
         }

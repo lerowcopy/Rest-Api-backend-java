@@ -38,6 +38,9 @@ new FormModel {
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"maximumSize": new java.awt.Dimension( 72, 35 )
 				"minimumSize": new java.awt.Dimension( 72, 35 )
+				auxiliary() {
+					"JavaCodeGenerator.variableModifiers": 1
+				}
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridx": 2
 			} )

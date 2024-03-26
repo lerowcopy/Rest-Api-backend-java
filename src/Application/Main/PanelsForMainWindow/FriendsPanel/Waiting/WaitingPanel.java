@@ -36,18 +36,17 @@ public class WaitingPanel extends JPanel implements Runnable {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        // Generated using JFormDesigner Evaluation license - Misha
+        // Generated using JFormDesigner Evaluation license - Misha Belyakov
         scrollPane1 = new JScrollPane();
         waitingPanel = new JPanel();
 
         //======== this ========
-        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
-        . border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder
-        . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .
-        awt .Font .BOLD ,12 ), java. awt. Color. red) , getBorder( )) )
-        ;  addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-        ) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
-        ;
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
+        .EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax.swing.border.TitledBorder.CENTER,javax
+        .swing.border.TitledBorder.BOTTOM,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,
+        12),java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans
+        .PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".equals(e.
+        getPropertyName()))throw new RuntimeException();}});
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         //======== scrollPane1 ========
@@ -65,7 +64,7 @@ public class WaitingPanel extends JPanel implements Runnable {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    // Generated using JFormDesigner Evaluation license - Misha
+    // Generated using JFormDesigner Evaluation license - Misha Belyakov
     private JScrollPane scrollPane1;
     private JPanel waitingPanel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
@@ -81,7 +80,6 @@ public class WaitingPanel extends JPanel implements Runnable {
                     HttpEntity entity = client.execute(request).getEntity();
                     String strEntity = EntityUtils.toString(entity);
                     if (strEntity.length() != length && !strEntity.equals("Bad Request")) {
-                        System.out.println(strEntity);
                         FriendRequestResponse response = gson.fromJson(strEntity, FriendRequestResponse.class);
                         waitingPanel.removeAll();
                         for (FriendRequest friend : response.data) {
@@ -93,6 +91,12 @@ public class WaitingPanel extends JPanel implements Runnable {
                             waitingPanel.revalidate();
                         }
                         length = strEntity.length();
+                    }
+                    else if (strEntity.equals("Bad Request")) {
+                        waitingPanel.removeAll();
+                        waitingPanel.repaint();
+                        waitingPanel.revalidate();
+                        length = 0;
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);

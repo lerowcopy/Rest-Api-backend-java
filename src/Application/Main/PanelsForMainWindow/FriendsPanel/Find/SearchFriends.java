@@ -52,8 +52,9 @@ public class SearchFriends extends JPanel {
                     try {
                         int index = 0;
                         List<String> users = db.GETUsers(Database.con, query);
+                        List<String> friends = db.GETFriends(Database.con, ApplicationWindow.name);
                         for (String user : users) {
-                            if (!user.equals(ApplicationWindow.name)){
+                            if (!user.equals(ApplicationWindow.name) && !friends.contains(user)) {
                                 CloseableHttpClient client = HttpClients.createDefault();
                                 HttpGet request = new HttpGet(String.format("http://localhost:8000/friendsRequest?loginU=%s&friendLogin=%s", ApplicationWindow.name, user));
                                 String response = client.execute(request).toString();
@@ -78,19 +79,18 @@ public class SearchFriends extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        // Generated using JFormDesigner Evaluation license - Misha
+        // Generated using JFormDesigner Evaluation license - Misha Belyakov
         searchField = new JTextField();
         searchBtn = new JButton();
         scrollPane = new JScrollPane();
         usersPanel = new JPanel();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
-        EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing
-        .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
-        java.awt.Color.red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener()
-        {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))
-        throw new RuntimeException();}});
+        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
+        0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
+        . BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
+        red) , getBorder( )) );  addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
+        beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {41, 0, 0};
@@ -132,7 +132,7 @@ public class SearchFriends extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    // Generated using JFormDesigner Evaluation license - Misha
+    // Generated using JFormDesigner Evaluation license - Misha Belyakov
     public static JTextField searchField;
     private JButton searchBtn;
     private JScrollPane scrollPane;

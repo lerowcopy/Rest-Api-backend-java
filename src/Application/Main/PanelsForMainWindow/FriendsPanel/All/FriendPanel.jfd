@@ -3,13 +3,46 @@ JFDML JFormDesigner: "8.2.1.0.348" Java: "17.0.10" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
-			"axis": 0
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+			"$columnSpecs": "82, 0:1.0, 0"
+			"$rowSpecs": "center:0:1.0"
+			"$alignTop": true
+			"$alignLeft": true
 		} ) {
 			name: "this"
+			"minimumSize": new java.awt.Dimension( 192, 54 )
+			"preferredSize": new java.awt.Dimension( 192, 54 )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "iconL"
+				"text": "icon"
+				"maximumSize": new java.awt.Dimension( 28, 2222 )
+				"minimumSize": new java.awt.Dimension( 28, 2222 )
+				"preferredSize": new java.awt.Dimension( 28, 2222 )
+				"horizontalTextPosition": 0
+				"horizontalAlignment": 0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "loginL"
+				"text": "text"
+				"font": new java.awt.Font( "Manrope ExtraBold", 0, 16 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 1
+				"insets": new java.awt.Insets( 0, 0, 25, 0 )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "deleteBtn"
+				"text": "delete"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"preferredSize": new java.awt.Dimension( 72, 30 )
+				"maximumSize": new java.awt.Dimension( 72, 40 )
+				"minimumSize": new java.awt.Dimension( 72, 40 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 2
+				"insets": new java.awt.Insets( 0, 0, 0, 5 )
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 70 )
+			"size": new java.awt.Dimension( 400, 66 )
 		} )
 	}
 }

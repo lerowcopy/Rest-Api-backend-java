@@ -11,9 +11,13 @@ public interface MethodsInterface {
     void execute (Connection con, String sql) throws SQLException;
     String GET (Connection con, Map<String, String> queryParams);
     List<String> GETUsers (Connection con, String name) throws SQLException;
+    List<String> GETFriends (Connection con, String name) throws SQLException;
     void POSTFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
+    void POSTFriend(Connection con, Map<String, String> queryParams) throws SQLException;
     FriendRequestResponse GETFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
+    FriendRequestResponse GETFriend (Connection con, Map<String, String> queryParams) throws SQLException;
     void DELETEFriendRequest (Connection con, Map<String, String> queryParams) throws SQLException;
+    void DELETEFriend (Connection con, Map<String, String> queryParams) throws SQLException;
     String POST(Connection con, Map<String, String> queryParams, String path)throws SQLException;
     String PUT(Connection con, int id, Map<String, String> queryParams)throws SQLException;
     String PATCH (Connection con, int id, Map<String, String> queryParams)throws SQLException;

@@ -6,6 +6,7 @@ package Application.Main.PanelsForMainWindow.FriendsPanel;
 
 import Application.Main.ApplicationWindow;
 import API.Database.Database;
+import Application.Main.PanelsForMainWindow.FriendsPanel.All.AllPanel;
 import Application.Main.PanelsForMainWindow.FriendsPanel.Find.SearchFriends;
 import Application.Main.PanelsForMainWindow.FriendsPanel.Waiting.WaitingPanel;
 
@@ -23,10 +24,13 @@ public class FriendsWindow extends JPanel {
 
         JPanel searchPanel = new SearchFriends();
         JPanel waitingPanel = new WaitingPanel();
+        JPanel allPanel = new AllPanel();
         friendsPanel.add(searchPanel, BorderLayout.CENTER);
         friendsPanel.add(waitingPanel, BorderLayout.CENTER);
+        friendsPanel.add(allPanel, BorderLayout.CENTER);
         searchPanel.setVisible(false);
         waitingPanel.setVisible(false);
+        allPanel.setVisible(true);
 
         closeBtn.addActionListener(e -> {
             ApplicationWindow.friendsWindow.setVisible(false);
@@ -36,9 +40,17 @@ public class FriendsWindow extends JPanel {
         findBtn.addActionListener(e -> {
             searchPanel.setVisible(true);
             waitingPanel.setVisible(false);
+            allPanel.setVisible(false);
         });
         waitingBtn.addActionListener(e -> {
             waitingPanel.setVisible(true);
+            searchPanel.setVisible(false);
+            allPanel.setVisible(false);
+        });
+
+        allBtn.addActionListener(e -> {
+            allPanel.setVisible(true);
+            waitingPanel.setVisible(false);
             searchPanel.setVisible(false);
         });
 

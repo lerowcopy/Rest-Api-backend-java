@@ -66,7 +66,7 @@ public class DescriptionMethods implements MethodsInterface {
     @Override
     public List<String> GETUsers(Connection con, String name) throws SQLException {
         List<String> users = new ArrayList<>();
-        String sql = String.format("SELECT * FROM User WHERE login LIKE '%s'", name + "%");
+        String sql = String.format("SELECT * FROM user WHERE login LIKE '%s'", name + "%");
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet resultSet = ps.executeQuery();
         while (resultSet.next()) {
@@ -76,8 +76,29 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
+    public List<String> GETFriends(Connection con, String name) throws SQLException {
+        List<String> friends = new ArrayList<>();
+        String sql = String.format("SELECT * FROM friends WHERE loginU='%s'", name);
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet resultSet = ps.executeQuery();
+        if (resultSet.isClosed()) {
+            return new ArrayList<>();
+        }
+        while (resultSet.next()) {
+            friends.add(resultSet.getString("friendLogin"));
+        }
+        return friends;
+    }
+
+    @Override
     public void POSTFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
         StringBuilder sql = PostFriendRequest(queryParams);
+        execute(con, sql.toString());
+    }
+
+    @Override
+    public void POSTFriend(Connection con, Map<String, String> queryParams) throws SQLException {
+        StringBuilder sql = PostFriend(queryParams);
         execute(con, sql.toString());
     }
 
@@ -103,8 +124,35 @@ public class DescriptionMethods implements MethodsInterface {
     }
 
     @Override
+    public FriendRequestResponse GETFriend(Connection con, Map<String, String> queryParams) throws SQLException {
+        StringBuilder sql = GetFriend(queryParams);
+        PreparedStatement ps = con.prepareStatement(sql.toString());
+        ResultSet resultSet = ps.executeQuery();
+
+        List<FriendRequest> requests = new ArrayList<>();
+
+        if (!resultSet.isClosed()){
+            while (resultSet.next()){
+                String id = resultSet.getString("id");
+                String loginU = resultSet.getString("loginU");
+                String friendLogin = resultSet.getString("friendLogin");
+
+                requests.add(new FriendRequest(id, loginU, friendLogin));
+            }
+            return new FriendRequestResponse(requests, "ok", "success");
+        }
+        throw new SQLException("BR");
+    }
+
+    @Override
     public void DELETEFriendRequest(Connection con, Map<String, String> queryParams) throws SQLException {
         String sql = DeleteFriendRequest(queryParams).toString();
+        execute(con, sql);
+    }
+
+    @Override
+    public void DELETEFriend(Connection con, Map<String, String> queryParams) throws SQLException {
+        String sql = DeleteFriend(queryParams).toString();
         execute(con, sql);
     }
 
@@ -304,6 +352,23 @@ public class DescriptionMethods implements MethodsInterface {
         return sql;
     }
 
+    private StringBuilder PostFriend(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("INSERT INTO friends (loginU, friendLogin) VALUES (");
+        boolean flag = false;
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                sql.append(String.format(", '%s'", entry.getValue()));
+            } else {
+                sql.append(String.format("'%s'", entry.getValue()));
+            }
+
+            flag = true;
+        }
+        sql.append(")");
+        return sql;
+    }
+
     private StringBuilder DeleteFriendRequest(Map<String, String> queryParams) {
         StringBuilder sql = new StringBuilder("DELETE FROM friends_request WHERE ");
         boolean flag = false;
@@ -319,8 +384,39 @@ public class DescriptionMethods implements MethodsInterface {
         }
         return sql;
     }
+    private StringBuilder DeleteFriend(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("DELETE FROM friends WHERE ");
+        boolean flag = false;
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
+            } else {
+                sql.append(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
+            }
+
+            flag = true;
+        }
+        return sql;
+    }
     private StringBuilder GetFriendRequest(Map<String, String> queryParams) {
         StringBuilder sql = new StringBuilder("SELECT * FROM friends_request WHERE ");
+        boolean flag = false;
+
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            if (flag) {
+                sql.append(String.format(" AND %s = '%s'", entry.getKey(), entry.getValue()));
+            } else {
+                sql.append(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
+            }
+
+            flag = true;
+        }
+        return sql;
+    }
+
+    private StringBuilder GetFriend(Map<String, String> queryParams) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM friends WHERE ");
         boolean flag = false;
 
         for (Map.Entry<String, String> entry : queryParams.entrySet()) {
