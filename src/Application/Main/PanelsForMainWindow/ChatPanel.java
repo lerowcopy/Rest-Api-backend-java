@@ -46,7 +46,7 @@ public class ChatPanel extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        // Generated using JFormDesigner Evaluation license - Misha
+        // Generated using JFormDesigner Evaluation license - Misha Belyakov
         scrollPane1 = new JScrollPane();
         chatPanel = new JPanel();
         sendMessagePanel = new JPanel();
@@ -54,13 +54,13 @@ public class ChatPanel extends JPanel {
         sendMessageBtn = new JButton();
 
         //======== this ========
-        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
-        . border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder
-        . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .
-        awt .Font .BOLD ,12 ), java. awt. Color. red) , getBorder( )) )
-        ;  addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-        ) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
-        ;
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
+        javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax
+        .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
+        .awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt
+        .Color.red), getBorder())); addPropertyChangeListener(new java.beans.
+        PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072".
+        equals(e.getPropertyName()))throw new RuntimeException();}});
         setLayout(new BorderLayout());
 
         //======== scrollPane1 ========
@@ -92,7 +92,7 @@ public class ChatPanel extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    // Generated using JFormDesigner Evaluation license - Misha
+    // Generated using JFormDesigner Evaluation license - Misha Belyakov
     private JScrollPane scrollPane1;
     public static JPanel chatPanel;
     private JPanel sendMessagePanel;
@@ -104,13 +104,11 @@ public class ChatPanel extends JPanel {
 
 
     public static class ClientPart {
-        public final String username;
         public static int multiplyHeight = 0;
         public static JLabel messageL;
         static PrintWriter out;
 
         public ClientPart(String username) throws IOException {
-            this.username = username;
             Socket socket = ApplicationWindow.socket;
 
             Scanner in = new Scanner(socket.getInputStream());
